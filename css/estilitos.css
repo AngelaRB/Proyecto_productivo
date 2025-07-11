@@ -1,0 +1,199 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+}
+
+
+body{
+    background-color: white;
+}
+
+.barra_navegacion{
+    display: flex;
+    justify-content: space-around;
+    background-color:  #0c9e18;
+    padding: 20px;  
+    margin: 0;
+}
+
+
+
+.diseño_paginas, a{
+    font-family: consolas;
+    text-transform: capitalize;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: large;
+    &:hover {
+        color: rgb(204, 238, 111);
+        transform: scale(1.3);
+        transition-duration: 1s;
+    }
+}
+
+.iconos{
+    color: white;
+}
+.titulo{
+    font-family: consolas;
+    text-transform: uppercase;
+    color: #230443;
+    text-align: center;
+}
+
+h2{
+    font-family: consolas;
+    color: #230443;
+    text-align: center;
+}
+
+.tareas{
+    margin-left: 30px;
+}
+.caja_tareas{
+    border-radius: 5px;
+    border-color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    width: 250px;
+    field-sizing: content;
+}
+
+.subir_tareas{
+
+
+    
+    border-radius: 5px;
+    padding: 5px 20px;
+    background-color: #0c9e18;
+    color: white;
+    font-family: consolas;
+    border: transparent;
+    width: 220px;
+    
+     &:hover {
+        transform: scale(1.2);
+        transition-duration: 1s;
+    }
+    margin-left: 30px;
+}
+
+.titulod{
+    color: #108519;
+    font-family: consolas;
+    text-align: center;
+}
+
+.pie{
+    background-color: #0c9e18;
+    text-align:  center;
+    padding: 30px;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* estilos del temporizador */
+
+.temp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 100px); /* espacio para navbar y footer */
+}
+
+.temporizador-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid #14d86c;
+    border-radius: 15px;
+    background: #56b45e;
+    box-shadow: #57c761 0px 8px 24px;
+}
+
+h1.titulod {
+    text-align: center;
+    margin-top: 20px;
+    color: #0b5e14;
+}
+
+.row-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+#clock {
+    font-size: 70px;
+    color: azure;
+    margin: 20px 0;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+label {
+    font-weight: bold;
+    color: #14d86c;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 5px;
+    width: 80px;
+    font-size: 20px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+}
+
+#start-button {
+    margin-top: 20px;
+    padding: 12px 14px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #014747;
+    border-radius: 6px;
+    background-color: #0c9e18;
+    transition: 0.3s;
+}
+
+#start-button:hover {
+    background-color: white;
+    color: #0a8615;
+    font-weight: bold;
+}
+
+footer.pie {
+    background-color: #0a8615;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
