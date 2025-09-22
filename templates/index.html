@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{%block content %}
+
+<body>
+  <h1 class="titulo">organizador de tareas - FocuSpace</h1>
+  <h2>¿Qué estás esperando?</h2>
+
+  <div class="list roundBorder order">
+    <div class="date">
+      <div class="dateRight">
+        <div id="dateNumber"></div>
+        <div>
+          <div id="dateMonth"></div>
+          <div id="dateYear"></div>
+        </div>
+      </div>
+      <div id="dateText"></div>
+    </div>
+
+    <form onsubmit="addNewTask(event)">
+        <input type="text" name="taskText" autocomplete="off" placeholder="Nueva tarea" />
+        <button type="submit" class="addTaskButton">+</button>
+        <button type="button" class="orderButton" onclick="renderOrderedTasks()">Ordenar</button>
+    </form>
+
+
+    <div id="tasksContainer"></div>
+  </div>
+
+  <footer class="pie" style="color:white">
+    <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>
+  </footer>
+
+  <script src="../static/js/organizador.js"></script>
+</body>
+{%endblock%}
