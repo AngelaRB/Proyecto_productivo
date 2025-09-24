@@ -165,10 +165,7 @@ main p{
 
 .container{
     display: flex;
-    border: 1px solid var(--line-clr);
-    border-radius: 1em;
-    margin-bottom: 20px;
-    padding: min(3em, 15%);
+    
 
     h1, p { margin-top: 1em;}
 }
@@ -489,4 +486,11 @@ input:focus {
     align-content: center;
     text-decoration: underline;
     padding-left: 20px;
+}
+
+.leer_diario{
+    border: 1px solid var(--line-clr);
+    border-radius: 1em;
+    margin-bottom: 20px;
+    padding: min(3em, 15%);
 }

@@ -13,9 +13,19 @@
             <div>
                 <p class="ad_diario">Nuevo pensamiento...</p>
             </div>
-                
-            </form>
         </div>
+        
+        {% for diario in diarios %}
+        <div class="container">
+            <a href="{{url_for('entradas_diario', id=diario['id']) }}">
+                {{diario.titulo}}
+                
+            </a>
+            <p>{{diario.fecha}}</p>
+        </div>
+        {%endfor%}
+        
+      
         
             <footer class="pie" style="color:white">
             <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>

@@ -15,11 +15,9 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 def index(): 
     return render_template('index.html') 
 
-@app.route('/diario')
-def diario():
-    return render_template('diario.html')
 
-@app.route('/nuevo_dia', methods=['POST', 'GET'])
+
+@app.route('/agregar_nuevo_dia', methods=['POST', 'GET'])
 def agregar_diario():
     if request.method == 'POST':
         titulo = request.form.get('titulo')
@@ -32,6 +30,20 @@ def agregar_diario():
         return redirect(url_for('diario'))      
     
     return render_template('agregar_diario.html')
+        
+@app.route('/diario')
+def diario():
+    query = 'SELECT * FROM diario'
+    diarios = consulta(query)
+        
+    return render_template('diario.html', diarios=diarios)
+
+@app.route('/nuevo_dia/<int:id>')
+def entradas_diario(id):
+    query = 'SELECT * FROM diario WHERE id = %s'
+    parametros = (id,)
+    diarios = consulta(query, parametros)
+    return render_template('nueva_entrada.html', diarios=diarios)
         
 @app.route('/pomodoro')
 def temporizador():
