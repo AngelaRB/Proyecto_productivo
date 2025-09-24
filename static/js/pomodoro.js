@@ -7,12 +7,14 @@ window.onload = () => {
     let cyclesGoal;
     let cyclesCompleted = 0;
 
+    let timerId = null; 
+
     function pomodoroController() {
         if (isRestTime()) {
             cyclesCompleted++;
             if (!goalReached()) {
                 currentTime = restTime;
-                timer();
+                startTimer();
                 timesCompleted = 0;
             } else {
                 console.log("¡Se acabó el pomodoro!");
@@ -23,12 +25,12 @@ window.onload = () => {
         if (timesCompleted % 2 == 0) {
             currentTime = worktime;
             timesCompleted++;
-            timer();
+            startTimer();
             console.log("¡Hora de trabajar! Ciclo: " + timesCompleted);
         } else {
             currentTime = breaktime;
             timesCompleted++;
-            timer();
+            startTimer();
             console.log("Hora de descansar 😌 Ciclo: " + timesCompleted);
         }
     }
@@ -48,10 +50,15 @@ window.onload = () => {
     let breakTimeInput = document.getElementById("break-time");
     let restTimeInput = document.getElementById("rest-time");
 
-    startButton.onclick = () => {
-        populateVariable();
-        startPomodoro();
-    };
+    
+        startButton.onclick = () => {
+    
+            if (!timerId) {
+                populateVariable();
+                startPomodoro();
+            }
+        };
+    
 
     function startPomodoro() {
         console.log("Empezó el pomodoro");
@@ -83,6 +90,14 @@ window.onload = () => {
     let currentTime = 1;
     let seconds = 0;
 
+
+    function startTimer() {
+        if (timerId) {
+            clearTimeout(timerId);
+        }
+        timerId = setTimeout(timer, 1000);
+    }
+
     function timer() {
         if (currentTime > 0 || seconds > 0) {
             if (seconds == 0) {
@@ -92,7 +107,7 @@ window.onload = () => {
                 seconds--;
             }
             updateClock();
-            setTimeout(timer, 1000);
+            timerId = setTimeout(timer, 1000);
         } else {
             pomodoroController();
             console.log("El temporizador terminó");
