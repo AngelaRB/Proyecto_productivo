@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from consultas import insertar, consulta, consulta_unica
 from dotenv import load_dotenv
 import os
+from datetime import date
 
 load_dotenv()
  
@@ -18,6 +19,20 @@ def index():
 def diario():
     return render_template('diario.html')
 
+@app.route('/nuevo_dia', methods=['POST', 'GET'])
+def agregar_diario():
+    if request.method == 'POST':
+        titulo = request.form.get('titulo')
+        fecha = request.form.get('fecha')
+        descripcion = request.form.get('descripcion')
+        
+        query = ('INSERT INTO diario (titulo,fecha,descripcion) VALUES(%s,%s,%s)')
+        parametros = (titulo,fecha,descripcion)
+        diario = insertar(query,parametros)
+        return redirect(url_for('diario'))      
+    
+    return render_template('agregar_diario.html')
+        
 @app.route('/pomodoro')
 def temporizador():
     return render_template('temporizador.html')

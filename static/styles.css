@@ -164,6 +164,7 @@ main p{
 }
 
 .container{
+    display: flex;
     border: 1px solid var(--line-clr);
     border-radius: 1em;
     margin-bottom: 20px;
@@ -461,4 +462,31 @@ input:focus {
     background-color: var(--disabled);
     text-decoration: line-through;
     color: var(--dark);
+}
+
+/* DIARIO */
+#title_diario{
+    margin: 1em;
+    text-align: center;
+    font-size: 40px;
+}
+
+.container svg{
+    width: 100%;
+    display: flex;
+    
+}
+
+.container a{
+    align-content: center;
+    width: 50px;
+    display: flex;
+    color: white;
+}
+
+.ad_diario{
+    text-align: left;
+    align-content: center;
+    text-decoration: underline;
+    padding-left: 20px;
 }
