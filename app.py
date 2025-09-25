@@ -24,9 +24,11 @@ def agregar_diario():
         fecha = request.form.get('fecha')
         descripcion = request.form.get('descripcion')
         
-        query = ('INSERT INTO diario (titulo,fecha,descripcion) VALUES(%s,%s,%s)')
-        parametros = (titulo,fecha,descripcion)
-        diario = insertar(query,parametros)
+        query = ('INSERT INTO diario (titulo, fecha, descripcion) VALUES(%s,(NOW()),%s)')
+        
+        parametros = (titulo,descripcion)
+        diario = insertar(query, parametros)
+        
         return redirect(url_for('diario'))      
     
     return render_template('agregar_diario.html')
