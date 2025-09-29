@@ -148,12 +148,6 @@ body{
     background-color: var(--hover-clr);
 }
 
-
-
- 
-
-
-
 main{
     padding: min(30px, 7%);
 }
@@ -225,17 +219,6 @@ h2{
     font-size: 20px;
     margin-top: 20px;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* estilos del temporizador */
 
@@ -494,4 +477,90 @@ input:focus {
     border-radius: 1em;
     margin-bottom: 20px;
     padding: min(3em, 15%);
+}
+
+.leer_diario p{
+    color: var(--text-clr);
+}
+
+.escribir_diario{
+    position:relative;
+    height: 700px;
+    width: 600px;
+    background-image: url(../static/img/hoja2.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center center;
+    display: flex;
+    margin: 0 auto;
+    border-radius: 10px 0 10px 0;
+}
+
+.escribir_diario2{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+}
+
+.escribir_diario2 form{
+    display: flex;
+    flex-direction: column;
+}
+
+.escribir_diario2 div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.escribir_diario2 label{
+    color: var(--base-clr);
+}
+
+.escribir_diario2 button{
+    background: none;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    padding: 10px;
+    transition-duration: 0.3s;
+
+    &:hover{
+        box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+        transition-duration: 0.3s;
+        transform: scale(1.05);
+        background-color: rgb(0 0 0 / 5%);
+    }
+}
+
+.escribir_diario2 input{
+    font-family: consolas;
+}
+
+#btn_diario{
+    font-family: consolas;
+    font-weight: bold;
+}
+
+.diario_titulo input{
+    background: none;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    padding: 10px;
+}
+
+.diario_des textarea{
+    width: 500px;
+    height: 400px;
+    background: none;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    padding: 10px;
 }

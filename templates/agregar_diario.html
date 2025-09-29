@@ -2,19 +2,25 @@
 {%block title%}Nuevo pensamiento{%endblock%}
 {% block content%}
 
-<form action="{{url_for('agregar_diario')}}" method="POST">
-    <div>
-        <label for="">Titulo</label>
-        <input type="text" name="titulo" required>
+<div class="escribir_diario">
+    <div class="escribir_diario2">
+        <form action="{{url_for('agregar_diario')}}" method="POST">
+            <div class="diario_titulo">
+                <label for="">Titulo</label>
+                <input type="text" name="titulo" required>
+            </div>
+            <div class="diario_des">
+                <label for="">¿Qué pasó?</label>
+                <textarea type="text" name="descripcion" required></textarea>
+            </div>
+            <div>
+                <button id="btn_diario" type="submit">Guardar pensamiento</button>
+            </div>
+        </form>
     </div>
-    <div>
-        <label for="">¿Qué pasó?</label>
-        <textarea type="text" name="descripcion" required></textarea>
-    </div>
-    <div>
-        <button type="submit">Guardar pensamiento</button>
-    </div>
-</form>
+        
+</div>
+
 
 
 
