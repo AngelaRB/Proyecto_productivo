@@ -35,23 +35,37 @@ def tareas():
         tarea = insertar(query,parametros)
     return redirect(url_for('index'))
 
-@app.route('/diario')
-def diario():
-    return render_template('diario.html')
 
-@app.route('/nuevo_dia', methods=['POST', 'GET'])
+
+@app.route('/agregar_nuevo_dia', methods=['POST', 'GET'])
 def agregar_diario():
     if request.method == 'POST':
         titulo = request.form.get('titulo')
         fecha = request.form.get('fecha')
         descripcion = request.form.get('descripcion')
         
-        query = ('INSERT INTO diario (titulo,fecha,descripcion) VALUES(%s,%s,%s)')
-        parametros = (titulo,fecha,descripcion)
-        diario = insertar(query,parametros)
+        query = ('INSERT INTO diario (titulo, fecha, descripcion) VALUES(%s,(NOW()),%s)')
+        
+        parametros = (titulo,descripcion)
+        diario = insertar(query, parametros)
+        
         return redirect(url_for('diario'))      
     
     return render_template('agregar_diario.html')
+        
+@app.route('/diario')
+def diario():
+    query = 'SELECT * FROM diario'
+    diarios = consulta(query)
+        
+    return render_template('diario.html', diarios=diarios)
+
+@app.route('/nuevo_dia/<int:id>')
+def entradas_diario(id):
+    query = 'SELECT * FROM diario WHERE id = %s'
+    parametros = (id,)
+    diarios = consulta(query, parametros)
+    return render_template('nueva_entrada.html', diarios=diarios)
         
 @app.route('/pomodoro')
 def temporizador():

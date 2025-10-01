@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{%block title%}Nueva entrada{%endblock%}
+{% block content%}
+    
+    <main>
+        
+        {% for diario in diarios %}
+        <div>
+            <h1>{{diario.titulo}}</h1>
+            <h3>{{diario.fecha}}</h3>
+            <p>{{diario.descripcion}}</p>
+        </div>
+        {%endfor%}
+        
+      
+        
+            <footer class="pie" style="color:white">
+            <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>
+            </footer>
+    </main>
+</body>
+{%endblock%}
