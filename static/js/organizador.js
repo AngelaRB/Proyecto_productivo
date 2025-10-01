@@ -1,52 +1,76 @@
-const dateNumber = document.getElementById("dateNumber");
-const dateText = document.getElementById("dateText");
-const dateMonth = document.getElementById("dateMonth");
-const dateYear = document.getElementById("dateYear");
+/*
 
-const tasksContainer = document.getElementById("tasksContainer");
+const inputBox = document.getElementById("input-box");
+const listContainer = document.getElementById("list-container");
+const emptyMessage = document.getElementById("empty-message");
 
-const setDate = () => {
-  const date = new Date();
-  dateNumber.textContent = date.toLocaleDateString("es", { day: "numeric" });
-  dateText.textContent = date.toLocaleDateString("es", { weekday: "long" });
-  dateMonth.textContent = date.toLocaleDateString("es", { month: "short" });
-  dateYear.textContent = date.toLocaleDateString("es", { year: "numeric" });
-};
+// ---------------- FUNCIONES ----------------
 
-const addNewTask = event => {
-  event.preventDefault();
-  const { value } = event.target.taskText;
-  if (!value) return;
-  const task = document.createElement("div");
-  task.classList.add("task", "roundBorder");
-  task.addEventListener("click", changeTaskState);
-  task.textContent = value;
-  tasksContainer.prepend(task);
-  event.target.reset();
-};
+// Agregar tarea
+function addTask() {
+  const task = inputBox.value.trim();
 
-const changeTaskState = event => {
-  event.target.classList.toggle("done");
-};
+  if (!task) {
+    alert("Debes escribir una tarea");
+    return;
+  }
 
-const order = () => {
-  const done = [];
-  const toDo = [];
-  tasksContainer.childNodes.forEach(el => {
-    if (el.classList && el.classList.contains("done")) {
-      done.push(el);
-    } else {
-      toDo.push(el);
-    }
-  });
-  return [...toDo, ...done];
-};
+  const li = document.createElement("li");
+  li.textContent = task;
 
-const renderOrderedTasks = () => {
-  const orderedTasks = order();
-  tasksContainer.innerHTML = "";
-  orderedTasks.forEach(el => tasksContainer.appendChild(el));
-};
+  const span = document.createElement("span");
+  span.textContent = "\u00d7";
+  span.classList.add("delete-btn");
+  li.appendChild(span);
 
-setDate();
+  listContainer.appendChild(li);
+  inputBox.value = "";
 
+  saveData();
+  showMessage();
+}
+
+// Delegación de eventos: marcar como hecho o eliminar
+listContainer.addEventListener("click", (e) => {
+  if (e.target.tagName === "LI") {
+    e.target.classList.toggle("checked");
+    saveData();
+  } else if (e.target.classList.contains("delete-btn")) {
+    e.target.parentElement.remove();
+    saveData();
+    showMessage();
+  }
+});
+
+// Mostrar u ocultar el mensaje de lista vacía
+function showMessage() {
+  emptyMessage.style.display =
+  listContainer.querySelectorAll("li").length === 0 ? "block" : "none";
+
+}
+
+// Guardar tareas en localStorage
+function saveData() {
+  localStorage.setItem("data", listContainer.innerHTML);
+}
+
+// Recuperar tareas guardadas
+function showTask() {
+  const saved = localStorage.getItem("data");
+  if (saved) {
+    listContainer.innerHTML = saved;
+  }
+  showMessage();
+}
+
+// Enter = agregar tarea
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    addTask();
+  }
+});
+
+// Inicializar  
+showTask();
+
+*/

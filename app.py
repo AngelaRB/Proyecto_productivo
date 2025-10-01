@@ -1,19 +1,39 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from consultas import insertar, consulta, consulta_unica
 from dotenv import load_dotenv
 import os
-from datetime import date
+from datetime import datetime
+
 
 load_dotenv()
  
 app = Flask(__name__)
 
-app.secret_key = os.getenv('FLASK_SECRET_KEY')
+app.secret_key = "mi_clave_secreta"
+
+
  
 
-@app.route('/') 
-def index(): 
-    return render_template('index.html') 
+@app.route('/')
+def index():
+    session["usuario"] = "Cristian"
+    session["rol"] = "aprendiz"
+    usuario = session.get("usuario")
+    tipo_de_usuario = session.get("rol")
+    return render_template('index.html', usuario=usuario, tipo_de_usuario=tipo_de_usuario)
+
+
+
+
+@app.route('/index', methods=['POST'])
+def tareas():
+    if request.method == 'POST':
+        tareas = request.form.get("tareas")
+
+        query = ("INSERT INTO tareas (tareas) VALUES (%s)")
+        parametros = (tareas)
+        tarea = insertar(query,parametros)
+    return redirect(url_for('index'))
 
 @app.route('/diario')
 def diario():
@@ -36,5 +56,31 @@ def agregar_diario():
 @app.route('/pomodoro')
 def temporizador():
     return render_template('temporizador.html')
+
+@app.route('/opiniones')
+def opiniones():
+    return render_template('opiniones.html')
+
+@app.route('/reseñas', methods=['GET', 'POST'])
+def reseñas():
+    if request.method == 'POST':
+        reseña = request.form.get('opinion')
+        fecha = datetime.now()
+
+        query = "INSERT INTO reseñas (texto, fecha) VALUES (%s, %s)"
+        parametros = (reseña, fecha)
+        insertar(query, parametros)
+
+        # Redirige para mostrar la reseña recién agregada
+        return redirect(url_for('reseñas'))
+
+    # 👇 Aquí debe llamarse a la función, no a la función en sí
+    reseñas = consulta("SELECT * FROM reseñas ORDER BY fecha DESC")
+
+    # 👇 Pasa la variable al template
+    return render_template('opiniones.html', reseñas=reseñas)
+
+
+
 
 app.run(debug=True)

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<script>
+  const form = document.querySelector(".form-taread");
+  const input = document.querySelector(".input-boxd");
+  const list = document.getElementById("list-containerd");
+
+  form.addEventListener("submit", function (e) {
+    
+
+    const texto = input.value.trim();
+
+    if (texto !== "") {
+      // crear un nuevo elemento <li>
+      const li = document.createElement("li");
+      li.textContent = texto;
+
+      // agregarlo a la lista
+      list.appendChild(li);
+
+      // limpiar el input
+      input.value = "";
+    }
+  });
+</script>
+
+
+
+<body>
+    <h1 class="titulod">Danos tu opinión aquí</h1>
+    <div class="reseñas-container">
+        <div class="todo-appd">
+            <h2 class="colorr">¿Qué te ha parecido FocuSpace?</h2>
+            <div class="add-taskd">
+                <form action="reseñas" method="POST" class="form-taread" >
+                    <input type="text" class="input-boxd" placeholder="Escribe tu reseña..." name="opinion" >
+                    <button type="submit" class="btn-enviar">Enviar</button>
+                </form>
+            </div>
+
+            <ul id="list-containerd" class="uld" ></ul>
+        </div>
+    </div>
+
+    <h1 class="apartadp">APARTADO DE RESEÑAS</h1>
+    <div class="reseñas-container">
+      <ul id="list-container" class="ulr">
+        {% for r in reseñas %}
+        <li>
+          <strong class="escritor">{{ r.fecha.strftime("%Y-%m-%d %H:%M:%S") }}</strong>: {{ r.texto }}
+        </li>
+        {% else %}
+          <li>No hay reseñas aún</li>
+        {% endfor %}
+      </ul>
+    </div>
+</body>
+
+{% endblock %}

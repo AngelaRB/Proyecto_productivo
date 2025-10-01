@@ -1,36 +1,35 @@
+<!--
+
 {% extends 'base.html' %}
-{%block content %}
+{% block content %}
 
-<body>
-  <h1 class="titulo">organizador de tareas - FocuSpace</h1>
-  <h2>¿Qué estás esperando?</h2>
-
-  <div class="list roundBorder order">
-    <div class="date">
-      <div class="dateRight">
-        <div id="dateNumber"></div>
-        <div>
-          <div id="dateMonth"></div>
-          <div id="dateYear"></div>
-        </div>
+ <body>
+  <h1 class="titulo">Organizador de tareas - FocuSpace</h1>
+  
+  <div class="contenedor">
+    <div class="todo-app">
+      <h2>¿Qué estás esperando?</h2>
+      <div class="add-task">
+        <form action="index" method="POST" class="form-tarea" >
+          <input type="text" id="input-box" placeholder="Agregar tarea..." name="tareas" >
+          <button type="submit" >Agregar</button>
+        </form>
       </div>
-      <div id="dateText"></div>
+
+      <ul id="list-container" class="ul" ></ul>
+      <p id="empty-message" class="message">No hay tareas pendientes</p>
     </div>
-
-    <form onsubmit="addNewTask(event)">
-        <input type="text" name="taskText" autocomplete="off" placeholder="Nueva tarea" />
-        <button type="submit" class="addTaskButton">+</button>
-        <button type="button" class="orderButton" onclick="renderOrderedTasks()">Ordenar</button>
-    </form>
-
-
-    <div id="tasksContainer"></div>
   </div>
 
-  <footer class="pie" style="color:white">
-    <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>
-  </footer>
-
-  <script src="../static/js/organizador.js"></script>
+ 
 </body>
-{%endblock%}
+
+
+{% endblock %}
+
+
+
+{% extends 'base.html' %}
+{% block content %}
+
+-->
