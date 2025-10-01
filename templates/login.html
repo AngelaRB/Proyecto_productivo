@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{%block title%}Iniciar sesión{%endblock%}
+{% block content%}
+
+<div>
+    <h1>Iniciar sesión</h1>
+    <form action="" method="POST">
+        <div>
+            <label for="">Usuario</label>
+            <input type="text" name="usuarios">
+        </div>
+        <div>
+            <label for="">Contraseña</label>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <button>Iniciar sesión</button>
+        </div>
+        <div>
+            {{mensaje}}
+        </div>
+    </form>
+</div>
+
+{%endblock%}

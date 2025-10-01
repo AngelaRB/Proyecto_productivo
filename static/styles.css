@@ -564,3 +564,29 @@ input:focus {
     box-shadow: 0 0 15px rgba(0, 0, 0, .2);
     padding: 10px;
 }
+
+
+/* ToDo 
+
+#taskList {
+    list-style: none;
+    padding: 0;
+}
+
+.baja {
+    background-color: #d4f4dd;
+}
+
+.media {
+    background-color: #fff3cd;
+}
+
+.alta {
+    background-color: #f8d7da;
+}
+
+button {
+    margin-left: 5px;
+} */
+
+
