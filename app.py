@@ -1,8 +1,10 @@
+
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from consultas import insertar, consulta, consulta_unica
 from dotenv import load_dotenv
 import os
-from datetime import date
+from datetime import datetime
+
 
 load_dotenv()
  
@@ -104,6 +106,32 @@ def entradas_diario(id):
 @app.route('/pomodoro')
 def temporizador():
     return render_template('temporizador.html')
+
+@app.route('/opiniones')
+def opiniones():
+    return render_template('opiniones.html')
+
+@app.route('/reseñas', methods=['GET', 'POST'])
+def reseñas():
+    if request.method == 'POST':
+        reseña = request.form.get('opinion')
+        fecha = datetime.now()
+
+        query = "INSERT INTO reseñas (texto, fecha) VALUES (%s, %s)"
+        parametros = (reseña, fecha)
+        insertar(query, parametros)
+
+        # Redirige para mostrar la reseña recién agregada
+        return redirect(url_for('reseñas'))
+
+    # 👇 Aquí debe llamarse a la función, no a la función en sí
+    reseñas = consulta("SELECT * FROM reseñas ORDER BY fecha DESC")
+
+    # 👇 Pasa la variable al template
+    return render_template('opiniones.html', reseñas=reseñas)
+
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
