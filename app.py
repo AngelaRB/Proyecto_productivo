@@ -15,7 +15,9 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
 @app.route('/')
 def inicio():
-    return render_template('index.html')
+    if request.method == 'POST':
+        return redirect(url_for('diario'))
+    return render_template('index.html', index=True)
  
 
 @app.route('/toDo') 
