@@ -567,8 +567,6 @@ button{
     padding-left: 20px;
 }
 
-<<<<<<< HEAD
-
 /* estilos de reseñas */
 
 .colorr{
@@ -622,8 +620,6 @@ button{
     box-sizing: border-box;
 }
 
-
-
 #list-container{
     list-style: none;
     padding: 0;
@@ -648,9 +644,8 @@ button{
 .escritor{
     color: #108519;
     font-weight: bold;
-    margin-right: 10px;}
-
-/*======*/
+    margin-right: 10px;
+}
 
 .leer_diario{
     border: 1px solid var(--line-clr);

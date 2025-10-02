@@ -145,8 +145,8 @@ def login():
         parametros = (usuarios,password)
         user = consulta_unica(query,parametros)
         
-        if usuarios == 'ange' and password == '8912':
-            session['usuarios'] = user['id']
+        if user:
+            session['id'] = user['id']
             session['usuarios'] = user['usuarios']
             return redirect(url_for('diario'))
         else:
