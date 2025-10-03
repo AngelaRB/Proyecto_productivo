@@ -3,27 +3,84 @@
 
 
 <script>
+  document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector(".form-taread");
   const input = document.querySelector(".input-boxd");
   const list = document.getElementById("list-containerd");
+  const stars = Array.from(document.querySelectorAll(".star"));
+  const estrellasInput = document.getElementById("estrellas"); // input hidden
 
-  form.addEventListener("submit", function (e) {
-    
+  console.log("Script cargado. estrellas encontradas:", stars.length, "input hidden:", !!estrellasInput);
 
-    const texto = input.value.trim();
+  if (!stars.length) {
+    console.error("No se encontraron elementos con la clase .star. Revisa que existan en el HTML.");
+    return;
+  }
+  if (!estrellasInput) {
+    console.error('No existe input hidden con id="estrellasInput". Asegúrate que el HTML tenga: id="estrellasInput" y name="estrellas"');
+    return;
+  }
 
-    if (texto !== "") {
-      // crear un nuevo elemento <li>
-      const li = document.createElement("li");
-      li.textContent = texto;
-
-      // agregarlo a la lista
-      list.appendChild(li);
-
-      // limpiar el input
-      input.value = "";
-    }
+  // Asegurarnos de que cada estrella tenga dataset.value (si no, lo calculamos por índice)
+  stars.forEach((s, idx) => {
+    if (!s.dataset.value) s.dataset.value = String(idx + 1);
+    s.setAttribute('role', 'button');
+    s.tabIndex = 0; // accesible con teclado
   });
+
+  // highlight según valor (puede ser entero o float)
+  function highlight(value) {
+    const val = Number(value) || 0;
+    stars.forEach(s => {
+      const v = Number(s.dataset.value) || 0;
+      s.classList.toggle('checked', v <= val);
+    });
+  }
+
+  // fijar rating (al click)
+  function setRating(value) {
+    const v = Number(value) || 0;
+    estrellasInput.value = v;
+    highlight(v);
+    console.log("Rating fijado:", v);
+  }
+
+  // Eventos en cada estrella
+  stars.forEach((star) => {
+    const value = Number(star.dataset.value);
+
+    star.addEventListener('click', (e) => {
+      setRating(value);
+    });
+
+    star.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setRating(value);
+      }
+    });
+
+    star.addEventListener('mouseover', () => {
+      // solo pinta temporalmente
+      highlight(value);
+    });
+
+    star.addEventListener('mouseout', () => {
+      // restaura el rating real (si hay)
+      highlight(Number(estrellasInput.value) || 0);
+    });
+  });
+
+  // Debug: al enviar el formulario mostramos lo que se va a enviar (quitar en producción)
+  form.addEventListener('submit', (e) => {
+    console.log("FORM SUBMIT -> texto:", input.value.trim(), "estrellas hidden:", estrellasInput.value);
+    // si quieres, descomenta la siguiente línea para evitar que se envíe (solo pruebas)
+    // e.preventDefault();
+  });
+
+  // si ya hay un valor por defecto en el hidden (por ejemplo 3), lo mostramos
+  highlight(Number(estrellasInput.value) || 0);
+});
 </script>
 
 
@@ -34,9 +91,28 @@
         <div class="todo-appd">
             <h2 class="colorr">¿Qué te ha parecido FocuSpace?</h2>
             <div class="add-taskd">
-                <form action="reseñas" method="POST" class="form-taread" >
-                    <input type="text" class="input-boxd" placeholder="Escribe tu reseña..." name="opinion" >
-                    <button type="submit" class="btn-enviar">Enviar</button>
+                <form action="/reseñas" method="POST" class="form-taread">
+                  <input 
+                    type="text" 
+                    class="input-boxd" 
+                    placeholder="Escribe tu reseña..." 
+                    name="opinion" 
+                    required
+                  >
+
+                  <!-- Estrellas -->
+                  <div class="rating">
+                    <i class="bi bi-star-fill star" data-value="1"></i>
+                    <i class="bi bi-star-fill star" data-value="2"></i>
+                    <i class="bi bi-star-fill star" data-value="3"></i>
+                    <i class="bi bi-star-fill star" data-value="4"></i>
+                    <i class="bi bi-star-fill star" data-value="5"></i>
+                  </div>
+
+                  <!-- Este input oculto guarda el valor real de las estrellas -->
+                  <input type="hidden" name="estrellas" id="estrellas" value="0">
+
+                  <button type="submit" class="btn-enviar">Enviar</button>
                 </form>
             </div>
 
@@ -51,6 +127,20 @@
         <li>
           <strong class="escritor">{{ r.fecha.strftime("%Y-%m-%d %H:%M:%S") }}</strong>: {{ r.texto }}
         </li>
+
+        
+
+         <div class="rating">
+          {% for i in range(1, 6) %}
+            {% if r.estrellas and i <= r.estrellas|float %}
+              <i class="bi bi-star-fill checked"></i>
+            {% else %}
+              <i class="bi bi-star-fill"></i>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+
         {% else %}
           <li>No hay reseñas aún</li>
         {% endfor %}

@@ -567,6 +567,11 @@ button{
     padding-left: 20px;
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 6100183 (estrellas en reseñas)
 /* estilos de reseñas */
 
 .colorr{
@@ -644,8 +649,56 @@ button{
 .escritor{
     color: #108519;
     font-weight: bold;
+<<<<<<< HEAD
     margin-right: 10px;
 }
+=======
+    margin-right: 10px;}
+
+
+.rating {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.star {
+  font-size: 30px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.star:hover {
+  color: #ffd700;
+  transform: scale(1.2);
+}
+
+.star.checked {
+  color: #ffd700;
+}
+
+
+.checked {
+  color: gold; /* o #FFD700 */
+}
+
+
+    .btn-enviar {
+      margin-left: 10px;
+      padding: 5px 15px;
+      border: none;
+      background-color: #5e63ff;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-enviar:hover {
+      background-color: #464ae6;
+    }
+
+>>>>>>> 6100183 (estrellas en reseñas)
 
 .leer_diario{
     border: 1px solid var(--line-clr);

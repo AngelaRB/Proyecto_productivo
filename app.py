@@ -118,9 +118,10 @@ def reseñas():
     if request.method == 'POST':
         reseña = request.form.get('opinion')
         fecha = datetime.now()
-
-        query = "INSERT INTO reseñas (texto, fecha) VALUES (%s, %s)"
-        parametros = (reseña, fecha)
+        estrellas_str = request.form.get("estrellas")
+        estrellas = float(estrellas_str) if estrellas_str else 0.0
+        query = "INSERT INTO reseñas (texto, fecha, estrellas) VALUES (%s, %s, %s)"
+        parametros = (reseña, fecha, estrellas)
         insertar(query, parametros)
 
         # Redirige para mostrar la reseña recién agregada
