@@ -21,16 +21,16 @@
             <div class="row-container settings-container">
                 <div class="input-container">
                     <label for="work-time">Work time</label>
-                    <input id="work-time" type="text" value="25">
+                    <input id="work-time" type="number" value="25">
                 </div>
                 <div class="input-container">
                     <label for="break-time">Break time</label>
-                    <input id="break-time" type
-                    ="text" value="5">
+                    <input id="break-time"  type
+                    ="number" value="5">
                 </div>
                 <div class="input-container">
                     <label for="rest-time">Rest time</label>
-                    <input id="rest-time" type="text" value="15">
+                    <input id="rest-time" type="number" value="15">
                 </div>
             </div>
         </div>
@@ -39,7 +39,9 @@
     <footer class="pie">
         <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>
     </footer>
-  
+
+    <audio id="alarm-sound" src="{{ url_for('static', filename='sonidos/Homecoming - Samsung Ringtone.mp3') }}" preload="auto"></audio>
+
 </body>
 
 {%endblock%}
