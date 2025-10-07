@@ -18,6 +18,13 @@
     let breakTimeInput = document.getElementById("break-time");
     let restTimeInput = document.getElementById("rest-time");
 
+    // 🎯 Elementos para la barra de progreso
+    const progressBar = document.getElementById("progress-bar");
+    const progressText = document.getElementById("progress-text");
+
+    // Tiempo total actual (en segundos)
+    let totalSeconds = 0;
+
     startButton.onclick = () => {
         if (!timerId) {
             populateVariable();
@@ -40,22 +47,24 @@
         cyclesCompleted = 0;
         currentTime = worktime;
         seconds = 0;
+
+        totalSeconds = worktime * 60; // tiempo total inicial
         updateClock();
+        updateProgressBar(); // inicializar barra
     }
 
     function pomodoroController() {
-        // Un ciclo pomodoro: trabajo-descanso x4, luego descanso largo
-        // timesCompleted: 0=trabajo, 1=descanso, 2=trabajo, 3=descanso, 4=trabajo, 5=descanso, 6=trabajo, 7=descanso largo
         if (isRestTime()) {
             cyclesCompleted++;
             if (!goalReached()) {
                 currentTime = restTime;
                 seconds = 0;
+                totalSeconds = restTime * 60;
                 startTimer();
                 timesCompleted = 0;
             } else {
                 console.log("¡Se acabó el pomodoro!");
-                reproducirAlarma(); // 🔔 Alarma al terminar ciclo completo
+                reproducirAlarma();
                 timerId = null;
             }
             return;
@@ -64,12 +73,14 @@
         if (timesCompleted % 2 == 0) {
             currentTime = worktime;
             seconds = 0;
+            totalSeconds = worktime * 60;
             timesCompleted++;
             startTimer();
             console.log("¡Hora de trabajar! Ciclo: " + timesCompleted);
         } else {
             currentTime = breaktime;
             seconds = 0;
+            totalSeconds = breaktime * 60;
             timesCompleted++;
             startTimer();
             console.log("Hora de descansar 😌 Ciclo: " + timesCompleted);
@@ -77,7 +88,6 @@
     }
 
     function isRestTime() {
-        // Un ciclo completo son 8 etapas (4 trabajo + 4 descanso)
         return timesCompleted === 8;
     }
 
@@ -100,6 +110,7 @@
             clearTimeout(timerId);
         }
         updateClock();
+        updateProgressBar();
         timerId = setTimeout(timer, 1000);
     }
 
@@ -112,9 +123,10 @@
                 seconds--;
             }
             updateClock();
+            updateProgressBar();
             timerId = setTimeout(timer, 1000);
         } else {
-            reproducirAlarma(); // 🔔 Alarma al terminar cada etapa
+            reproducirAlarma();
             pomodoroController();
             console.log("El temporizador terminó");
         }
@@ -124,12 +136,21 @@
     function reproducirAlarma() {
         const alarm = document.getElementById("alarm-sound");
         if (alarm) {
-            alarm.currentTime = 0; // Reinicia el sonido
+            alarm.currentTime = 0;
             alarm.play().catch(error => {
                 console.error("Error al reproducir el sonido:", error);
             });
         } else {
             console.warn("No se encontró el elemento de sonido de alarma.");
         }
+    }
+
+    // 📊 FUNCIÓN PARA ACTUALIZAR LA BARRA DE PROGRESO
+    function updateProgressBar() {
+        const elapsedSeconds = totalSeconds - (currentTime * 60 + seconds);
+        const progressPercent = (elapsedSeconds / totalSeconds) * 100;
+
+        progressBar.style.width = `${progressPercent}%`;
+        progressText.textContent = `${Math.floor(progressPercent)}%`;
     }
 };
