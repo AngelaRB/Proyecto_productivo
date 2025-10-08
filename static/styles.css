@@ -649,10 +649,6 @@ button{
 .escritor{
     color: #108519;
     font-weight: bold;
-<<<<<<< HEAD
-    margin-right: 10px;
-}
-=======
     margin-right: 10px;}
 
 
@@ -698,7 +694,6 @@ button{
       background-color: #464ae6;
     }
 
->>>>>>> 6100183 (estrellas en reseñas)
 
 .leer_diario{
     border: 1px solid var(--line-clr);

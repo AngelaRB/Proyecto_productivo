@@ -87,7 +87,7 @@ def agregar_diario():
         parametros = (titulo,descripcion)
         diario = insertar(query, parametros)
         
-        return redirect(url_for('diario'))      
+        return redirect(url_for('diario'))
     
     return render_template('agregar_diario.html')
         
