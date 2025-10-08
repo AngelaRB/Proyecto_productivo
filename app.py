@@ -20,20 +20,47 @@ def inicio():
     return render_template('index.html', index=True)
  
 
-@app.route('/toDo') 
-def ToDo(): 
-    return render_template('todo1.html') 
+@app.route('/organizador')
+def Organizador():
+    query = 'SELECT * FROM tareas ORDER BY id DESC'
+    tareas = consulta(query)
+    return render_template('organizador.html', tareas=tareas)
+
+@app.route('/agregar_tarea', methods=['POST'])
+def agregar_tarea():
+    titulo = request.form.get('titulo')
+
+    if titulo:
+        query = "INSERT INTO tareas (tarea, hecha) VALUES (%s, %s)"
+        parametros = (titulo, False)
+        insertar(query, parametros)
+
+    return redirect(url_for('Organizador'))
+
+@app.route('/eliminar_tarea/<int:id>', methods=['POST'])
+def eliminar_tarea(id):
+    query = "DELETE FROM tareas WHERE id = %s"
+    insertar(query, (id,))
+    return redirect(url_for('Organizador'))
+
+@app.route('/marcar_hecha/<int:id>', methods=['POST'])
+def marcar_hecha(id):
+    query = "UPDATE tareas SET hecha = NOT hecha WHERE id = %s"
+    insertar(query, (id,))
+    return redirect(url_for('Organizador'))
+
+""""""
 
 """"""
 # Obtener todas las tareas
-@app.route("/tasks", methods=["GET"])
-def get_tasks():
-    query = 'SELECT * FROM task'
-    tasks = consulta_unica(query)
+#@app.route("/tasks", methods=["GET"])
+#def get_tasks():
+ #   query = 'SELECT * FROM task'
+  #  tasks = consulta_unica(query)
     
-    return jsonify(tasks)
+  #  return jsonify(tasks)
 
-
+""""""
 
 """
 # Agregar tarea

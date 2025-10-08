@@ -1,4 +1,4 @@
-/*
+
 
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
@@ -73,4 +73,36 @@ document.addEventListener("keydown", (event) => {
 // Inicializar  
 showTask();
 
-*/
+// Delegación de eventos: detectar clics dentro del contenedor
+listContainer.addEventListener("click", (e) => {
+  const target = e.target;
+
+  // Si hace clic en la tarea → marcar o desmarcar como hecha
+  if (target.tagName === "LI") {
+    target.classList.toggle("checked");
+  }
+
+  // Si hace clic en el botón de eliminar (la ×)
+  if (target.classList.contains("delete-btn")) {
+    target.parentElement.remove();
+  }
+
+  showMessage();
+});
+
+// Mostrar mensaje si no hay tareas
+function showMessage() {
+  const tareas = listContainer.querySelectorAll("li:not(#empty-message)");
+  const mensaje = document.getElementById("empty-message");
+
+  if (tareas.length === 0) {
+    if (!mensaje) {
+      const msg = document.createElement("li");
+      msg.id = "empty-message";
+      msg.textContent = "¡No tienes tareas pendientes!";
+      listContainer.appendChild(msg);
+    }
+  } else if (mensaje) {
+    mensaje.remove();
+  }
+}
