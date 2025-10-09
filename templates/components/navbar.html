@@ -1,0 +1,23 @@
+<body>
+    <nav class="navbar">
+        <div class="conte_nav">
+            <a href="{{url_for('inicio')}}">Inicio</a>
+            <a href="{{url_for('nosotros')}}">Nosotros</a>
+            <a href="">Contáctanos</a>
+        </div>
+        <div class="conte_inicio">
+            <a href="">Registrarse</a>
+            <a href="{{url_for('login')}}" >Iniciar sesión</a>
+        </div>
+    </nav>
+
+{% if index%}
+<div class="fondo_header">
+    <div class="conte_header">
+        <h1>Organiza tu día, tranquiliza tu mente</h1>
+    </div>
+</div>
+{% endif %}
+
+</body>
+    

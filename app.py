@@ -15,9 +15,11 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
 @app.route('/')
 def inicio():
-    if request.method == 'POST':
-        return redirect(url_for('diario'))
     return render_template('index.html', index=True)
+
+@app.route('/nosotros')
+def nosotros():
+    return render_template('nosotros.html')
  
 
 @app.route('/organizador')

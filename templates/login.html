@@ -1,9 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_public.html" %}
 {%block title%}Iniciar sesión{%endblock%}
 {% block content%}
 
 <div>
-    <h1>Iniciar sesión</h1>
+    <main>
+        <h1>Iniciar sesión</h1>
     <form action="" method="POST">
         <div>
             <label for="">Usuario</label>
@@ -20,6 +21,8 @@
             {{mensaje}}
         </div>
     </form>
+    </main>
+    
 </div>
 
 {%endblock%}

@@ -3,7 +3,8 @@
 {% block content%}
     
     <main>
-        <h1 id="title_diario">Mi diario</h1>
+        <div class="fondo_diario">
+            <h1 id="title_diario">Mi diario</h1>
         <div class="container">
             <a href="{{url_for('agregar_diario')}}" class="container">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -39,6 +40,8 @@
             <footer class="pie" style="color:white">
             <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>
             </footer>
+        </div>
+        
     </main>
 </body>
 {%endblock%}
