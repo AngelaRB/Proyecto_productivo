@@ -1,0 +1,28 @@
+{% extends "base_public.html" %}
+{%block title%}Registrarse{%endblock%}
+{% block content%}
+
+<div>
+    <main>
+        <h1>Registrarse</h1>
+    <form action="" method="POST">
+        <div>
+            <label for="">Usuario</label>
+            <input type="text" name="usuarios">
+        </div>
+        <div>
+            <label for="">Contraseña</label>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <button class="btn-enviar">Iniciar sesión</button>
+        </div>
+        <div>
+            {{mensaje}}
+        </div>
+    </form>
+    </main>
+    
+</div>
+
+{%endblock%}

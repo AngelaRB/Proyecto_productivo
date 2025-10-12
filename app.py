@@ -1,7 +1,9 @@
 
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, flash
+from flask_bcrypt import bcrypt
 from consultas import insertar, consulta, consulta_unica
 from dotenv import load_dotenv
+from functools import wraps
 import os
 from datetime import datetime
 
@@ -21,9 +23,19 @@ def inicio():
 def nosotros():
     return render_template('nosotros.html')
  
+#para que nadie entre a donde no lo llaman xd
+def login_requerido(f):
+    @wraps(f)
+    def decorador(*args, **kwargs):
+        if 'id' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorador
 
 @app.route('/organizador')
+@login_requerido
 def Organizador():
+    
     query = 'SELECT * FROM tareas ORDER BY id DESC'
     tareas = consulta(query)
     return render_template('organizador.html', tareas=tareas)
@@ -51,67 +63,14 @@ def marcar_hecha(id):
     insertar(query, (id,))
     return redirect(url_for('Organizador'))
 
-""""""
-
-""""""
-# Obtener todas las tareas
-#@app.route("/tasks", methods=["GET"])
-#def get_tasks():
- #   query = 'SELECT * FROM task'
-  #  tasks = consulta_unica(query)
-    
-  #  return jsonify(tasks)
-
-""""""
-
-"""
-# Agregar tarea
-
-@app.route("/tasks", methods=["POST"])
-def add_task():
-    data = request.json
-    query = "INSERT INTO task (title, relevance) VALUES (%s, %s)"
-    parametros = (data["title"], data["relevance"])
-    tasks = insertar(query,parametros)
-    
-    return jsonify({"message": "Tarea agregada correctamente"})
-
-# Editar tarea
-@app.route("/tasks/<int:id>", methods=["PUT"])
-def edit_task(id):
-    data = request.json
-    query = "UPDATE task SET title = %s, relevance = %s WHERE id = %s"
-    parametros = (data["title"], data["relevance"], id)
-    cursor = insertar(query,parametros)
-
-    if cursor.rowcount > 0:
-        return jsonify({"message": "Tarea actualizada"})
-    return jsonify({"error": "Tarea no encontrada"}), 404
-
-# Eliminar tarea
-@app.route("/tasks/<int:id>", methods=["DELETE"])
-def delete_task(id):
-    query = "DELETE FROM task WHERE id = %s"
-    cursor = insertar(query, (id,))
-    
-    if cursor.rowcount > 0:
-        return jsonify({"message": "Tarea eliminada"})
-    return jsonify({"error": "Tarea no encontrada"}), 404
-
-
-
-#hasta acá va ToDo
-"""
-
-
 @app.route('/agregar_nuevo_dia', methods=['POST', 'GET'])
+@login_requerido
 def agregar_diario():
     if request.method == 'POST':
         titulo = request.form.get('titulo')
-        fecha = request.form.get('fecha')
         descripcion = request.form.get('descripcion')
         
-        query = ('INSERT INTO diario (titulo, fecha, descripcion) VALUES(%s,(NOW()),%s)')
+        query = ('INSERT INTO diario (titulo, descripcion) VALUES(%s,%s)')
         
         parametros = (titulo,descripcion)
         diario = insertar(query, parametros)
@@ -121,7 +80,9 @@ def agregar_diario():
     return render_template('agregar_diario.html')
         
 @app.route('/diario')
+@login_requerido
 def diario():
+
     query = 'SELECT * FROM diario'
     diarios = consulta(query)
         
@@ -143,6 +104,7 @@ def opiniones():
     return render_template('opiniones.html')
 
 @app.route('/reseñas', methods=['GET', 'POST'])
+@login_requerido
 def reseñas():
     if request.method == 'POST':
         reseña = request.form.get('opinion')
@@ -162,24 +124,39 @@ def reseñas():
     # 👇 Pasa la variable al template
     return render_template('opiniones.html', reseñas=reseñas)
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    mensaje = ''
+    if request.method == 'POST':
+        usuario = request.form.get('usuarios')
+        password = request.form.get('password')
 
+        hash_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
+        query = 'INSERT INTO usuarios (usuario, password) VALUES (%s, %s)'
+        parametros = (usuario, hash_pw.decode('utf-8'))
+        insertar(query, parametros)
+        
+        mensaje = 'Usuario registrado con éxito'
+        return redirect(url_for('login'))
+    
+    return render_template('register.html', mensaje=mensaje)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     mensaje = ''
     
     if request.method == 'POST':
-        usuarios = request.form.get('usuarios')
+        usuario = request.form.get('usuarios')
         password = request.form.get('password')
         
-        query = 'SELECT * FROM usuarios WHERE usuarios = %s and password = %s'
-        parametros = (usuarios,password)
+        query = 'SELECT * FROM usuarios WHERE usuario = %s'
+        parametros = (usuario,)
         user = consulta_unica(query,parametros)
         
-        if user:
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
             session['id'] = user['id']
-            session['usuarios'] = user['usuarios']
+            session['usuario'] = user['usuario']
             return redirect(url_for('diario'))
         else:
             mensaje = 'Usuario o contraseña incorrectos'
@@ -187,4 +164,9 @@ def login():
     
     return render_template('login.html', login=True)
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('inicio'))
+    
 app.run(debug=True)
