@@ -802,7 +802,7 @@ footer.pie {
 /* página inicio y navbar */
 
 .navbar{
-    background:var(--clr-primario);
+    background-color: var(--base-clr);
     display: flex;
     font-size:16px;
     box-shadow: 0 0 15px rgba(0, 0, 0, .5);

@@ -131,9 +131,19 @@ def reseñas():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     mensaje = ''
+    
     if request.method == 'POST':
         usuario = request.form.get('usuarios')
         password = request.form.get('password')
+        
+        # verifica si es mismo usuario
+        query = 'SELECT * FROM usuarios where usuario = %s'
+        existe = consulta_unica(query, (usuario,))
+        print("Valor de existe:", existe)
+        
+        if existe:
+            mensaje = 'Usuario existente, elige otro.'
+            return render_template('register.html', mensaje=mensaje, register=register)
 
         hash_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -144,7 +154,7 @@ def register():
         mensaje = 'Usuario registrado con éxito'
         return redirect(url_for('login'))
     
-    return render_template('register.html', mensaje=mensaje)
+    return render_template('register.html', mensaje=mensaje, register=True)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

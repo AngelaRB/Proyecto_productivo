@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-    {% if login %}
+    {% if not login and not register %}
+        {%include 'components/navbar.html' %}
     {% else %}
-    {%include 'components/navbar.html' %}
+
     {%endif%}
     <main>
         {% block content %}

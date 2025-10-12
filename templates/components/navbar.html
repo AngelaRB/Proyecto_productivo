@@ -7,17 +7,21 @@
         </div>
         <div class="conte_inicio">
             <a href="{{url_for('register') }} ">Registrarse</a>
+            {% if session.get('usuario') %}
+            <a href="{{url_for('Organizador')}}">Iniciar sesión</a>
+            {%else%}
             <a href="{{url_for('login')}}" >Iniciar sesión</a>
+            {%endif%}
         </div>
     </nav>
 
-{% if index%}
-<div class="fondo_header">
-    <div class="conte_header">
-        <h1>Organiza tu día, tranquiliza tu mente</h1>
+    {% if index%}
+    <div class="fondo_header">
+        <div class="conte_header">
+            <h1>Organiza tu día, tranquiliza tu mente</h1>
+        </div>
     </div>
-</div>
-{% endif %}
+    {% endif %}
 
 </body>
     
