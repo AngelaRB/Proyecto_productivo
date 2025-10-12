@@ -35,18 +35,20 @@ def login_requerido(f):
 @app.route('/organizador')
 @login_requerido
 def Organizador():
+    usuario_id = session['id']
     
-    query = 'SELECT * FROM tareas ORDER BY id DESC'
-    tareas = consulta(query)
+    query = 'SELECT * FROM tareas WHERE usuario_id = %s'
+    tareas = consulta(query,(usuario_id,))
     return render_template('organizador.html', tareas=tareas)
 
 @app.route('/agregar_tarea', methods=['POST'])
 def agregar_tarea():
     titulo = request.form.get('titulo')
+    usuario_id = session['id']
 
     if titulo:
-        query = "INSERT INTO tareas (tarea, hecha) VALUES (%s, %s)"
-        parametros = (titulo, False)
+        query = "INSERT INTO tareas (tarea, hecha, usuario_id) VALUES (%s, %s,%s)"
+        parametros = (titulo,False, usuario_id)
         insertar(query, parametros)
 
     return redirect(url_for('Organizador'))
@@ -69,10 +71,11 @@ def agregar_diario():
     if request.method == 'POST':
         titulo = request.form.get('titulo')
         descripcion = request.form.get('descripcion')
+        usuario_id = session['id']
         
-        query = ('INSERT INTO diario (titulo, descripcion) VALUES(%s,%s)')
+        query = ('INSERT INTO diario (titulo, descripcion, usuario_id) VALUES(%s,%s,%s)')
         
-        parametros = (titulo,descripcion)
+        parametros = (titulo,descripcion,usuario_id)
         diario = insertar(query, parametros)
         
         return redirect(url_for('diario'))
@@ -82,9 +85,10 @@ def agregar_diario():
 @app.route('/diario')
 @login_requerido
 def diario():
+    usuario_id = session['id']
 
-    query = 'SELECT * FROM diario'
-    diarios = consulta(query)
+    query = 'SELECT * FROM diario WHERE usuario_id = %s ORDER BY fecha DESC'
+    diarios = consulta(query, (usuario_id,))
         
     return render_template('diario.html', diarios=diarios)
 
