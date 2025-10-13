@@ -1,4 +1,4 @@
-
+/*
 function toggleSidebar(){
   
 const toggleButton = document.getElementById('toggle-btn')
@@ -14,9 +14,30 @@ toggleButton.addEventListener('click', () => {
   sidebar.classList.toggle('close');
   toggleButton.classList.toggle('rotate');
 });
+*/
 
+
+
+function toggleSidebar(){
+  const toggleButton = document.getElementById('toggle-btn')
+  const sidebar = document.getElementById('sidebar')
+
+  sidebar.classList.toggle('close')
+  toggleButton.classList.toggle('rotate')
+
+  Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
+    ul.classList.remove('show')
+    ul.previousElementSibling.classList.remove('rotate')
+  })
+
+}
 
 function toggleSubMenu(button){
     button.nextElementSibling.classList.toggle('show')
     button.classList.toggle('rotate') 
+
+    if(sidebar.classList.contains('close')){
+      sidebar.classList.toggle('close')
+      toggleButton.classList.toggle('rotate')
+    }
 }

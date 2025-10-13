@@ -13,7 +13,7 @@
     --hover-clr: #031742;
     --accent2-clr: #b90492;
     --accent3-clr: #ffd40c;
-    --btn-clr: #750d22;
+    --btn-clr: #04B92B;
     --accent-clr: #4d0382;
     --text-clr: #e6e6ef;
     --secondary-text-clr: #b0b3c1;
@@ -61,15 +61,11 @@ body{
     align-self: start;
     transition: 300ms ease-in-out;
     overflow: hidden;
+    text-wrap: nowrap;
 }
 #sidebar.close{
     padding:5px;
     width: 60px;
-    
-}
-
-.close{
-    display: none;
 }
 
 #sidebar ul{
@@ -183,6 +179,86 @@ body{
     
 
     h1, p { margin-top: 1em;}
+}
+
+@media(max-width: 800px){
+    body.with-sidebar{
+        grid-template-columns: 1fr;
+    }
+
+    main{
+        padding: 2em 1em 60px 1em;
+    }
+
+    .container{
+        border:  none;
+        padding: 0;
+    }
+
+    #sidebar{
+        height: 60px;
+        width: 100%;
+        border-right: none;
+        border-top: 1px solid var(--line-clr);
+        padding: 0;
+        position: fixed;
+        top: unset;
+        bottom: 0;
+
+        > ul{
+            padding: 0;
+            display: grid;
+            grid-auto-columns: 70px;
+            grid-auto-flow: column;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        ul li {
+            height: 100%;
+        }
+
+        ul a, ul .dropdown-btn{
+            width: 70px;
+            height: 60px;
+            padding: 0;
+            border-radius: 0;
+            justify-content: center;
+        }
+
+        ul li span, ul li:first-child, .dropdown-btn svg:last-child{
+            display: none;
+        }
+
+        ul li .sub-menu.show{
+            position: fixed;
+            bottom: 60px;
+            left: 0;
+            box-sizing: border-box;
+            height: 60px;
+            width: 100%;
+            background-color: var(--hover-clr);
+            border-top: 1px solid var(--line-clr);
+            display: flex;
+            justify-content: center;
+
+            > div{
+                overflow-x: auto;
+            }
+
+            li{
+                display: inline-flex;
+            }
+
+            a{
+                box-sizing: border-box;
+                padding: 1em;
+                width: auto;
+                justify-content: center;
+            }
+        }
+    }
+
 }
 
 .titulo{
@@ -696,14 +772,19 @@ footer.pie {
       margin-left: 10px;
       padding: 5px 15px;
       border: none;
-      background-color: var(--btn-clr);
-      color: var(--text-clr);
+      background-color: var(--line-clr);
+      color: var(--base-clr);
       border-radius: 8px;
       cursor: pointer;
+      transition-duration: 0.6s;
+      font-weight: bolder;
+      color: var(--hover-clr);
     }
 
     .btn-enviar:hover {
       background-color: var(--accent2-clr);
+      color: var(--baselg-clr);
+      transition-duration: 0.6s;
     }
 
 .leer_diario{
