@@ -62,7 +62,9 @@ body{
     transition: 300ms ease-in-out;
     overflow: hidden;
     text-wrap: nowrap;
+    justify-content: space-between;
 }
+
 #sidebar.close{
     padding:5px;
     width: 60px;
@@ -70,6 +72,7 @@ body{
 
 #sidebar ul{
     list-style: none;
+    height: 100%;
 }
 
 #sidebar > ul > li:first-child{
@@ -83,12 +86,13 @@ body{
 
 /* diseño de ventana actual */
 #sidebar ul li.active a{
-    color: var(--accent2-clr);
+    color: var(--line-clr);
     
     svg{
-        fill: var(--accent2-clr);
+        fill: var(--line-clr);
     }
 }
+/*solo es eso */
 
 #sidebar a, #sidebar .dropdown-btn, #sidebar .logo{
     border-radius: .5em;
@@ -100,6 +104,7 @@ body{
     gap: 1em;
 
 }
+
 
 .dropdown-btn{
     width: 100%;
@@ -147,6 +152,13 @@ body{
     padding-left: 2em;
 }
 
+.sidebar-space{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+}
+
 #toggle-btn{
     margin-left: auto;
     padding: 1em;
@@ -164,6 +176,10 @@ body{
     background-color: var(--hover-clr);
 }
 
+.bottom-section{
+    margin-top: auto;
+}
+
 .fondo_diario{
     padding: min(30px, 7%);
 }
@@ -173,6 +189,7 @@ body{
     margin-top: 5px;
     margin-bottom: 15px;
 }
+
 
 .container{
     display: flex;
@@ -215,7 +232,7 @@ body{
         }
 
         ul li {
-            height: 100%;
+            height: 90%;
         }
 
         ul a, ul .dropdown-btn{
