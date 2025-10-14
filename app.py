@@ -39,7 +39,7 @@ def Organizador():
     
     query = 'SELECT * FROM tareas WHERE usuario_id = %s'
     tareas = consulta(query,(usuario_id,))
-    return render_template('organizador.html', tareas=tareas)
+    return render_template('organizador.html', tareas=tareas, pagina_actual='organizador')
 
 @app.route('/agregar_tarea', methods=['POST'])
 def agregar_tarea():
@@ -90,7 +90,7 @@ def diario():
     query = 'SELECT * FROM diario WHERE usuario_id = %s ORDER BY fecha DESC'
     diarios = consulta(query, (usuario_id,))
         
-    return render_template('diario.html', diarios=diarios)
+    return render_template('diario.html', diarios=diarios, pagina_actual='diario')
 
 @app.route('/nuevo_dia/<int:id>')
 def entradas_diario(id):
@@ -101,11 +101,12 @@ def entradas_diario(id):
         
 @app.route('/pomodoro')
 def temporizador():
-    return render_template('temporizador.html')
+    return render_template('temporizador.html', pagina_actual='pomodoro')
 
+"""
 @app.route('/opiniones')
 def opiniones():
-    return render_template('opiniones.html')
+    return render_template('opiniones.html', )"""
 
 @app.route('/reseñas', methods=['GET', 'POST'])
 @login_requerido
@@ -126,7 +127,7 @@ def reseñas():
     reseñas = consulta("SELECT * FROM reseñas ORDER BY fecha DESC")
 
     # 👇 Pasa la variable al template
-    return render_template('opiniones.html', reseñas=reseñas)
+    return render_template('opiniones.html', reseñas=reseñas, pagina_actual='opiniones')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
