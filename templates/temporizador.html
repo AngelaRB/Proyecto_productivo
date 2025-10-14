@@ -16,6 +16,7 @@
 
             <div class="row-container start-container">
                 <button id="start-button">Start</button>
+                <button id="cancel-button" style="display:none;">Cancel</button>
             </div>
 
             <div class="row-container settings-container">
@@ -25,8 +26,7 @@
                 </div>
                 <div class="input-container">
                     <label for="break-time">Break time</label>
-                    <input id="break-time"  type
-                    ="number" value="5">
+                    <input id="break-time" type="number" value="5">
                 </div>
                 <div class="input-container">
                     <label for="rest-time">Rest time</label>
@@ -34,8 +34,6 @@
                 </div>
             </div>
         </div>
-
-        
     </main>
 
     <div class="progress-container">
@@ -49,6 +47,16 @@
 
     <audio id="alarm-sound" src="{{ url_for('static', filename='sonidos/Homecoming - Samsung Ringtone.mp3') }}" preload="auto"></audio>
 
+    <!-- 🪟 Modal de confirmación -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <p>¿Estás seguro de que quieres terminar tu sesión?</p>
+            <div class="modal-buttons">
+                <button id="confirm-yes">Sí</button>
+                <button id="confirm-no">No</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 {%endblock%}

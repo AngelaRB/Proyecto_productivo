@@ -408,11 +408,32 @@ input {
     cursor: pointer;
     border: none;
     border-radius: 6px;
-    background-color: var(--btn-clr);
+    background-color: var(--line-clr);
     transition: 0.3s;
 }
 
 #start-button:hover {
+    background-color: var(--baselg-clr);
+    color: var(--base-clr);
+    font-weight: bold;
+}
+
+#cancel-button {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 12px 14px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--btn-clr);
+    transition: 0.3s;
+}
+
+#cancel-button:hover {
     background-color: var(--baselg-clr);
     color: var(--base-clr);
     font-weight: bold;
@@ -455,6 +476,81 @@ footer.pie {
   z-index: 1;
   font-weight: bold;
 }
+
+/* Fondo del modal */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caja de contenido */
+.modal-content {
+  background-color: var( --hover-clr);
+  color: var(--baselg-clr);
+  padding: 20px 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  max-width: 320px;
+}
+
+/* Botones */
+.modal-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#confirm-yes {
+  background-color: var(--line-clr);
+  color: white;
+}
+
+#confirm-no {
+  background-color: var(--btn-clr);
+  color: white;
+}
+
+.modal-buttons button:hover {
+  transform: scale(1.05);
+}
+
+/* ✨ Animaciones para mostrar y ocultar el botón Cancel */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(10px); }
+}
+
+.show-btn {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.hide-btn {
+  animation: fadeOut 0.3s ease forwards;
+}
+
 
 /* organizador */
 
