@@ -1,44 +1,55 @@
  window.onload = () => {
-
-    let breaktime;
-    let worktime; 
-    let restTime;
-    let timesCompleted;
-    let cyclesGoal;
+    let breaktime, worktime, restTime, timesCompleted, cyclesGoal;
     let cyclesCompleted = 0;
-
-    let timerId = null; 
+    let timerId = null;
     let currentTime = 1;
     let seconds = 0;
 
-    let clock = document.getElementById("clock");
-    let cyclesInput = document.getElementById("cycles-input");
-    let startButton = document.getElementById("start-button");
-    let workTimeInput = document.getElementById("work-time");
-    let breakTimeInput = document.getElementById("break-time");
-    let restTimeInput = document.getElementById("rest-time");
-
-    // 🎯 Elementos para la barra de progreso
+    const clock = document.getElementById("clock");
+    const cyclesInput = document.getElementById("cycles-input");
+    const startButton = document.getElementById("start-button");
+    const cancelButton = document.getElementById("cancel-button");
+    const workTimeInput = document.getElementById("work-time");
+    const breakTimeInput = document.getElementById("break-time");
+    const restTimeInput = document.getElementById("rest-time");
     const progressBar = document.getElementById("progress-bar");
     const progressText = document.getElementById("progress-text");
 
-    // Tiempo total actual (en segundos)
+    //  Evitar valores menores a 1 en los inputs
+    [workTimeInput, breakTimeInput, restTimeInput, cyclesInput].forEach(input => {
+        input.addEventListener("input", () => {
+            if (input.value < 1) {
+                input.value = 1;
+                console.warn(`El valor mínimo para "${input.id}" es 1`);
+            }
+        });
+    });
+
+
+    // Modal
+    const modal = document.getElementById("confirm-modal");
+    const confirmYes = document.getElementById("confirm-yes");
+    const confirmNo = document.getElementById("confirm-no");
+
     let totalSeconds = 0;
 
     startButton.onclick = () => {
         if (!timerId) {
             populateVariable();
             startPomodoro();
+
+            // 🔥 Animar aparición del botón Cancel
+            cancelButton.style.display = "inline-block";
+            cancelButton.classList.remove("hide-btn");
+            cancelButton.classList.add("show-btn");
         }
     };
 
     function startPomodoro() {
-        console.log("Empezó el pomodoro");
         pomodoroController();
     }
 
     function populateVariable() {
-        console.log("Variables cargadas");
         worktime = parseInt(workTimeInput.value);
         breaktime = parseInt(breakTimeInput.value);
         restTime = parseInt(restTimeInput.value);
@@ -47,10 +58,9 @@
         cyclesCompleted = 0;
         currentTime = worktime;
         seconds = 0;
-
-        totalSeconds = worktime * 60; // tiempo total inicial
+        totalSeconds = worktime * 60;
         updateClock();
-        updateProgressBar(); // inicializar barra
+        updateProgressBar();
     }
 
     function pomodoroController() {
@@ -63,9 +73,9 @@
                 startTimer();
                 timesCompleted = 0;
             } else {
-                console.log("¡Se acabó el pomodoro!");
                 reproducirAlarma();
                 timerId = null;
+                hideCancelButton();
             }
             return;
         }
@@ -76,14 +86,12 @@
             totalSeconds = worktime * 60;
             timesCompleted++;
             startTimer();
-            console.log("¡Hora de trabajar! Ciclo: " + timesCompleted);
         } else {
             currentTime = breaktime;
             seconds = 0;
             totalSeconds = breaktime * 60;
             timesCompleted++;
             startTimer();
-            console.log("Hora de descansar 😌 Ciclo: " + timesCompleted);
         }
     }
 
@@ -106,9 +114,7 @@
     }
 
     function startTimer() {
-        if (timerId) {
-            clearTimeout(timerId);
-        }
+        if (timerId) clearTimeout(timerId);
         updateClock();
         updateProgressBar();
         timerId = setTimeout(timer, 1000);
@@ -128,29 +134,53 @@
         } else {
             reproducirAlarma();
             pomodoroController();
-            console.log("El temporizador terminó");
         }
     }
 
-    // 🔔 FUNCIÓN DE ALARMA
     function reproducirAlarma() {
         const alarm = document.getElementById("alarm-sound");
         if (alarm) {
             alarm.currentTime = 0;
-            alarm.play().catch(error => {
-                console.error("Error al reproducir el sonido:", error);
-            });
-        } else {
-            console.warn("No se encontró el elemento de sonido de alarma.");
+            alarm.play().catch(error => console.error("Error al reproducir:", error));
         }
     }
 
-    // 📊 FUNCIÓN PARA ACTUALIZAR LA BARRA DE PROGRESO
     function updateProgressBar() {
         const elapsedSeconds = totalSeconds - (currentTime * 60 + seconds);
         const progressPercent = (elapsedSeconds / totalSeconds) * 100;
-
         progressBar.style.width = `${progressPercent}%`;
         progressText.textContent = `${Math.floor(progressPercent)}%`;
     }
+
+    // 💥 Cancelar Pomodoro con modal
+    cancelButton.addEventListener("click", () => {
+        modal.style.display = "flex";
+    });
+
+    confirmYes.addEventListener("click", () => {
+        clearTimeout(timerId);
+        timerId = null;
+        currentTime = 0;
+        seconds = 0;
+        updateClock();
+        progressBar.style.width = "0%";
+        progressText.textContent = "0%";
+        modal.style.display = "none";
+        hideCancelButton();
+    });
+
+    confirmNo.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    // 🎬 Función para ocultar con animación
+    function hideCancelButton() {
+        cancelButton.classList.remove("show-btn");
+        cancelButton.classList.add("hide-btn");
+        setTimeout(() => {
+            cancelButton.style.display = "none";
+        }, 300);
+    }
 };
+
+
