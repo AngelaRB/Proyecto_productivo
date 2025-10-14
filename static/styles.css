@@ -9,6 +9,7 @@
 
     --base-clr: #030d22;
     --baselg-clr: #dee8fc;
+    --lg-clr: #dee8fc11;
     --line-clr: #0af3ff;
     --hover-clr: #031742;
     --accent2-clr: #b90492;
@@ -672,6 +673,153 @@ footer.pie {
     padding-left: 20px;
 }
 
+.leer_diario{
+    border: 1px solid var(--line-clr);
+    border-radius: 1em;
+    margin-bottom: 20px;
+    padding: min(3em, 15%);
+}
+
+.leer_diario p{
+    color: var(--text-clr);
+}
+
+.escribir_diario{
+    position:relative;
+    height: 700px;
+    width: 600px;
+    background-image: url(../static/img/hoja2.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center center;
+    display: flex;
+    margin: 0 auto;
+    border-radius: 10px 0 10px 0;
+}
+
+.escribir_diario2{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+}
+
+.escribir_diario2 form{
+    display: flex;
+    flex-direction: column;
+}
+
+.escribir_diario2 div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.escribir_diario2 label{
+    color: var(--base-clr);
+}
+
+.escribir_diario2 button{
+    background: none;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    padding: 10px;
+    transition-duration: 0.3s;
+
+    &:hover{
+        box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+        transition-duration: 0.3s;
+        transform: scale(1.05);
+        background-color: rgb(0 0 0 / 5%);
+    }
+}
+
+.escribir_diario2 input{
+    font-family: consolas;
+}
+
+#btn_diario{
+    font-family: consolas;
+    font-weight: bold;
+}
+
+.diario_titulo input{
+    background: none;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    padding: 10px;
+}
+
+.diario_des textarea{
+    width: 500px;
+    height: 400px;
+    background: none;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    padding: 10px;
+}
+
+.modal-btn{
+    background-image: linear-gradient(to right, var(--accent2-clr),var(--line-clr));
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    color: var(--text-clr);
+    cursor: pointer;
+    padding: 10px 25px;
+}
+
+.modal-btn:active{
+    opacity: 0.8;
+}
+
+.modal{
+    background-color: var(--lg-clr);
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 0.3s ease-in-out;
+    z-index: -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.open{
+    opacity: 1;
+    z-index: 999;
+}
+
+.modal-inner{
+    background: var(--shadow-clr);
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    padding: 15px 25px;
+    text-align: center;
+    width: 380px;
+}
+
+.modal-inner h2{
+    margin: 0;
+}
+
+.modal-inner p {
+    line-height: 24px;
+    margin: 10px 0;
+}
+
+
 /* estilos de reseñas */
 
 .colorr{
@@ -785,117 +933,26 @@ footer.pie {
 }
 
 
-    .btn-enviar {
-      margin-left: 10px;
-      padding: 5px 15px;
-      border: none;
-      background-color: var(--line-clr);
-      color: var(--base-clr);
-      border-radius: 8px;
-      cursor: pointer;
-      transition-duration: 0.6s;
-      font-weight: bolder;
-      color: var(--hover-clr);
-    }
-
-    .btn-enviar:hover {
-      background-color: var(--accent2-clr);
-      color: var(--baselg-clr);
-      transition-duration: 0.6s;
-    }
-
-.leer_diario{
-    border: 1px solid var(--line-clr);
-    border-radius: 1em;
-    margin-bottom: 20px;
-    padding: min(3em, 15%);
-}
-
-.leer_diario p{
-    color: var(--text-clr);
-}
-
-.escribir_diario{
-    position:relative;
-    height: 700px;
-    width: 600px;
-    background-image: url(../static/img/hoja2.jpg);
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-position: center center;
-    display: flex;
-    margin: 0 auto;
-    border-radius: 10px 0 10px 0;
-}
-
-.escribir_diario2{
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    position:absolute;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 15px rgba(0, 0, 0, .5);
-}
-
-.escribir_diario2 form{
-    display: flex;
-    flex-direction: column;
-}
-
-.escribir_diario2 div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.escribir_diario2 label{
+.btn-enviar {
+    margin-left: 10px;
+    padding: 5px 15px;
+    border: none;
+    background-color: var(--line-clr);
     color: var(--base-clr);
+    border-radius: 8px;
+    cursor: pointer;
+    transition-duration: 0.6s;
+    font-weight: bolder;
+    color: var(--hover-clr);
 }
 
-.escribir_diario2 button{
-    background: none;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
-    padding: 10px;
-    transition-duration: 0.3s;
-
-    &:hover{
-        box-shadow: 0 0 15px rgba(0, 0, 0, .5);
-        transition-duration: 0.3s;
-        transform: scale(1.05);
-        background-color: rgb(0 0 0 / 5%);
-    }
+.btn-enviar:hover {
+    background-color: var(--accent2-clr);
+    color: var(--baselg-clr);
+    transition-duration: 0.6s;
 }
 
-.escribir_diario2 input{
-    font-family: consolas;
-}
 
-#btn_diario{
-    font-family: consolas;
-    font-weight: bold;
-}
-
-.diario_titulo input{
-    background: none;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
-    padding: 10px;
-}
-
-.diario_des textarea{
-    width: 500px;
-    height: 400px;
-    background: none;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
-    padding: 10px;
-}
 
 /* página inicio y navbar */
 

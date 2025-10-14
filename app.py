@@ -65,6 +65,16 @@ def marcar_hecha(id):
     insertar(query, (id,))
     return redirect(url_for('Organizador'))
 
+@app.route('/diario')
+@login_requerido
+def diario():
+    usuario_id = session['id']
+
+    query = 'SELECT * FROM diario WHERE usuario_id = %s ORDER BY fecha DESC'
+    diarios = consulta(query, (usuario_id,))
+        
+    return render_template('diario.html', diarios=diarios, pagina_actual='diario')
+
 @app.route('/agregar_nuevo_dia', methods=['POST', 'GET'])
 @login_requerido
 def agregar_diario():
@@ -81,23 +91,40 @@ def agregar_diario():
         return redirect(url_for('diario'))
     
     return render_template('agregar_diario.html')
-        
-@app.route('/diario')
-@login_requerido
-def diario():
-    usuario_id = session['id']
 
-    query = 'SELECT * FROM diario WHERE usuario_id = %s ORDER BY fecha DESC'
-    diarios = consulta(query, (usuario_id,))
-        
-    return render_template('diario.html', diarios=diarios, pagina_actual='diario')
-
-@app.route('/nuevo_dia/<int:id>')
+@app.route('/ver_diario/<int:id>')
 def entradas_diario(id):
-    query = 'SELECT * FROM diario WHERE id = %s'
-    parametros = (id,)
-    diarios = consulta(query, parametros)
-    return render_template('nueva_entrada.html', diarios=diarios)
+    usuario_id = session.get('id')
+    if not usuario_id:
+        return redirect(url_for('diario'))
+    
+    
+    query = 'SELECT * FROM diario WHERE id = %s AND usuario_id = %s'
+    parametros = (id, usuario_id)
+    diario = consulta_unica(query, parametros)
+    print(diario)
+    
+    if not diario:
+        return redirect(url_for('diario'))
+    
+    return render_template('ver_entrada.html', diario=diario)
+
+@app.route('/verificar_password/<int:id>', methods=['POST'])
+def verificar_password(id):
+    data = request.get_json()
+    password = data.get('password')
+
+    usuario = session.get('usuario')
+
+    # Corregimos el query (ya no es una tupla)
+    query = 'SELECT password FROM usuarios WHERE usuario = %s'
+    usuario_data = consulta_unica(query, (usuario,))
+
+    if usuario_data and bcrypt.checkpw(password.encode('utf-8'), usuario_data['password'].encode('utf-8')):
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
+
         
 @app.route('/pomodoro')
 def temporizador():

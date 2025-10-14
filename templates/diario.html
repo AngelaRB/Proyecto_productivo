@@ -20,16 +20,31 @@
         {% for diario in diarios %}
             <div class="leer_diario">
                 <div class="">
-                    <a href="{{url_for('entradas_diario', id=diario['id']) }}">
-                        <p>{{diario.titulo}}</p>
-                    </a>
+                    <button class="openModal modal-btn">{{diario.titulo}}</button>
+                    <div>
+                        <p>{{diario.fecha}}</p>
+                    </div>
+
+                    <div class="modal">
+                        <div class="modal-inner">
+                            <h2>Para leer esta entrada, ingresa tu contraseña</h2>
+                            <input type="password" class="password-input" placeholder="Contraseña">
+                            <p class="error-msg" style="color: red; display: none;">Contraseña incorrecta</p>
+                            <div>
+                                <button class="diarioPage ingresar-btn modal-btn" data-id="{{diario.id}}">Ingresar</button>
+                                <button class="closeModal modal-btn">Cerrar</button>
+                                
+                            </div>
+                            
+                        </div> 
+                        
+                    </div>
+                    
                 </div>
                 
-                <div>
-                    <p>{{diario.fecha}}</p>
-                </div>
             </div>
-        {%endfor%}
+            {%endfor%}
+        
 
 
         
@@ -40,8 +55,8 @@
             <footer class="pie" style="color:white">
             <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>
             </footer>
-        </div>
-        
+       
     </main>
+    <script src="../static/js/modal.js"></script>
 </body>
 {%endblock%}

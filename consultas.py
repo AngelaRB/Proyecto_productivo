@@ -14,7 +14,7 @@ def consulta(consulta, parametros=None):
     cursor = conexion.cursor(dictionary=True)
     cursor.execute(consulta,parametros or ())
     resultado = cursor.fetchall()
-    conexion.close
+    conexion.close()
     return resultado
 
 def consulta_unica(consulta, parametros=None):
@@ -22,5 +22,5 @@ def consulta_unica(consulta, parametros=None):
     cursor = conexion.cursor(dictionary=True)
     cursor.execute(consulta,parametros or ())
     resultado = cursor.fetchone()
-    conexion.close
+    conexion.close()
     return resultado
