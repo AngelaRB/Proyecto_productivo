@@ -19,10 +19,64 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 def inicio():
     return render_template('index.html', index=True)
 
-@app.route('/nosotros')
-def nosotros():
-    return render_template('nosotros.html')
- 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    mensaje = ''
+    
+    if request.method == 'POST':
+        usuario = request.form.get('usuarios')
+        password = request.form.get('password')
+        
+        # verifica si es mismo usuario
+        query = 'SELECT * FROM usuarios where usuario = %s'
+        existe = consulta_unica(query, (usuario,))
+        print("Valor de existe:", existe)
+        
+        if existe:
+            mensaje = 'Usuario existente, elige otro.'
+            return render_template('register.html', mensaje=mensaje, register=register)
+
+        hash_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        query = 'INSERT INTO usuarios (usuario, password) VALUES (%s, %s)'
+        parametros = (usuario, hash_pw.decode('utf-8'))
+        insertar(query, parametros)
+        
+        mensaje = 'Usuario registrado con éxito'
+        return redirect(url_for('login'))
+    
+    return render_template('register.html', mensaje=mensaje, register=True)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    mensaje = ''
+    
+    if request.method == 'POST':
+        usuario = request.form.get('usuarios')
+        password = request.form.get('password')
+        
+        query = 'SELECT * FROM usuarios WHERE usuario = %s'
+        parametros = (usuario,)
+        user = consulta_unica(query,parametros)
+        
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+            session['id'] = user['id']
+            session['usuario'] = user['usuario']
+            session['rol'] = user['rol']
+            print("ROL DEL USUARIO:", user.get('rol'))
+
+            return redirect(url_for('diario'))
+        else:
+            mensaje = 'Usuario o contraseña incorrectos'
+            return render_template('login.html', mensaje=mensaje,login=login)
+    
+    return render_template('login.html', login=True)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('inicio'))
+
 #para que nadie entre a donde no lo llaman xd
 def login_requerido(f):
     @wraps(f)
@@ -31,6 +85,47 @@ def login_requerido(f):
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorador
+
+def admin_requerido(f):
+    @wraps(f)
+    def decorador(*args, **kwargs):
+        if 'id' not in session:
+            return redirect(url_for('login'))
+        
+        if session.get('rol') != 'admin':
+            return redirect(url_for('diario'))
+        
+        return f(*args, **kwargs)
+    return decorador
+
+@app.route('/nosotros')
+def nosotros():
+    return render_template('nosotros.html')
+
+@app.route('/contacto')
+def contacto():
+    return render_template('contacto.html')
+
+@app.route('/contactar', methods=['POST', 'GET'])
+def contactar():
+    nombre = request.form.get('nombre')
+    correo = request.form.get('correo')
+    descripcion = request.form.get('descripcion')
+    
+    query = ('INSERT INTO contacto (nombre, correo, descripcion) VALUES(%s,%s,%s)')
+    parametros = (nombre,correo,descripcion)
+    contacto = insertar(query,parametros)
+    
+    return redirect(url_for('tabla_contacto'))
+
+@app.route('/tabla_contacto')
+@admin_requerido
+def tabla_contacto():
+    query = 'SELECT * FROM contacto'
+    contacto = consulta(query)
+    return render_template('tabla_contacto.html', contactos=contacto)
+    
+
 
 @app.route('/organizador')
 @login_requerido
@@ -156,59 +251,11 @@ def reseñas():
     # 👇 Pasa la variable al template
     return render_template('opiniones.html', reseñas=reseñas, pagina_actual='opiniones')
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    mensaje = ''
-    
-    if request.method == 'POST':
-        usuario = request.form.get('usuarios')
-        password = request.form.get('password')
-        
-        # verifica si es mismo usuario
-        query = 'SELECT * FROM usuarios where usuario = %s'
-        existe = consulta_unica(query, (usuario,))
-        print("Valor de existe:", existe)
-        
-        if existe:
-            mensaje = 'Usuario existente, elige otro.'
-            return render_template('register.html', mensaje=mensaje, register=register)
+@app.route('/relax', methods=['GET', 'POST'])
+@login_requerido
+def relax():
+    return render_template('relax.html', pagina_actual='relax')
 
-        hash_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        query = 'INSERT INTO usuarios (usuario, password) VALUES (%s, %s)'
-        parametros = (usuario, hash_pw.decode('utf-8'))
-        insertar(query, parametros)
-        
-        mensaje = 'Usuario registrado con éxito'
-        return redirect(url_for('login'))
-    
-    return render_template('register.html', mensaje=mensaje, register=True)
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    mensaje = ''
-    
-    if request.method == 'POST':
-        usuario = request.form.get('usuarios')
-        password = request.form.get('password')
-        
-        query = 'SELECT * FROM usuarios WHERE usuario = %s'
-        parametros = (usuario,)
-        user = consulta_unica(query,parametros)
-        
-        if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
-            session['id'] = user['id']
-            session['usuario'] = user['usuario']
-            return redirect(url_for('diario'))
-        else:
-            mensaje = 'Usuario o contraseña incorrectos'
-            return render_template('login.html', mensaje=mensaje,login=login)
-    
-    return render_template('login.html', login=True)
-
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('inicio'))
     
 app.run(debug=True)

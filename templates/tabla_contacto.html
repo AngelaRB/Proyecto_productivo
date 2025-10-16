@@ -1,0 +1,28 @@
+{% extends "base_public.html" %}
+{%block title%}Tabla contacto{%endblock%}
+{% block content%}
+
+<div class="table_info">
+        <table>
+            <tr>
+                <th>nombre</th>
+                <th>correo</th>
+                <th>descripcion</th>
+            </tr>
+        {% for contacto in contactos%}    
+            <tr>
+                <td>{{contacto.nombre}}</td>
+                <td>{{contacto.correo}}</td>
+                <td>
+                    <div class="conte_tbdatos">
+                        <div>
+                            <p>{{contacto.descripcion}}</p>
+                        </div>
+                    </div>
+                </td>
+                
+                {%endfor%}
+            </tr>
+        </table>
+
+{%endblock%}
