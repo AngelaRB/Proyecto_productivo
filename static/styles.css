@@ -63,7 +63,6 @@ body{
     transition: 300ms ease-in-out;
     overflow: hidden;
     text-wrap: nowrap;
-    justify-content: space-between;
 }
 
 #sidebar.close{
@@ -73,7 +72,6 @@ body{
 
 #sidebar ul{
     list-style: none;
-    height: 100%;
 }
 
 #sidebar > ul > li:first-child{
@@ -149,16 +147,6 @@ body{
     rotate: -180deg;
 }
 
-#sidebar .sub-menu a{
-    padding-left: 2em;
-}
-
-.sidebar-space{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 90%;
-}
 
 #toggle-btn{
     margin-left: auto;
@@ -193,11 +181,14 @@ body{
 
 
 .container{
-    display: flex;
-    
+    border: 1px solid var(--line-clr);
+    border-radius: 1em;
+    margin-bottom: 20px;
+    padding: min(3em, 15%);
 
-    h1, p { margin-top: 1em;}
+  h2, p { margin-top: 1em }
 }
+
 
 @media(max-width: 800px){
     body.with-sidebar{
@@ -229,12 +220,13 @@ body{
             grid-auto-columns: 70px;
             grid-auto-flow: column;
             align-items: center;
-            overflow-x: auto;
+            overflow-x: scroll;
         }
 
-        ul li {
-            height: 90%;
+        ul li{
+            height: 100%;
         }
+
 
         ul a, ul .dropdown-btn{
             width: 70px;
