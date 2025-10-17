@@ -4,6 +4,7 @@
             <a href="{{url_for('inicio')}}">Inicio</a>
             <a href="{{url_for('nosotros')}}">Nosotros</a>
             <a href="{{url_for('contacto')}}">Contáctanos</a>
+            {% if session['rol'] == 'admin' %} <a href="{{url_for('admin')}}">Admin</a> {%endif%}
         </div>
         <div class="conte_inicio">
             <a href="{{url_for('register') }} ">Registrarse</a>

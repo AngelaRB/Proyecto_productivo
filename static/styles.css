@@ -63,6 +63,7 @@ body{
     transition: 300ms ease-in-out;
     overflow: hidden;
     text-wrap: nowrap;
+    justify-content: space-between;
 }
 
 #sidebar.close{
@@ -72,6 +73,14 @@ body{
 
 #sidebar ul{
     list-style: none;
+}
+
+.hg-75{
+    height: 75%;
+}
+
+.hg-82{
+    height: 82%;
 }
 
 #sidebar > ul > li:first-child{
@@ -213,6 +222,7 @@ body{
         position: fixed;
         top: unset;
         bottom: 0;
+        
 
         > ul{
             padding: 0;
@@ -1147,4 +1157,84 @@ footer.pie {
 
 .conte_nombres p{
     text-align: justify;
+}
+
+/* admin */
+
+
+.conte_admin{
+    box-shadow: black 0px 0px 10px;
+    width: 80%;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 50px;
+}
+
+.conte_admin a{
+    text-decoration: none;
+    color: var(--base-clr);
+    height: 100px;
+    background-color: var(--baselg-clr);
+    border-radius: 20px;
+}
+
+.conte_admin div{
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+    transition-duration: 0.6s;
+    background: var(--clr-border);
+
+    &:hover{
+        transform: scale(1.02);
+        transition-duration: 0.6s;
+        background: var(--clr-secundario);
+    }
+}
+
+ /* tablas contacto y usuarios */
+ .table_info{
+    display: flex;
+    margin-top: 40px;
+   
+}
+
+table {
+    margin-top: 30px;
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+td, th {
+    border: 3px solid var(--shadow-clr);
+    padding: 20px;
+}
+
+th{
+    text-transform: capitalize;
+}
+
+tr:nth-child(even){background-color: var(--hover-clr);}
+
+tr:hover {background-color: var(--dark-clr);}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--clr-btn);
+  color: white;
+}
+
+@media (max-width:800px){
+    .table_info{
+        overflow-x:auto;
+        margin-bottom: 100px;
+    }
 }

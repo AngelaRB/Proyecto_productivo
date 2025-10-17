@@ -7,21 +7,21 @@
             <tr>
                 <th>nombre</th>
                 <th>correo</th>
-                <th>descripcion</th>
+                <th>mensaje</th>
             </tr>
-        {% for contacto in contactos%}    
+            {% for contacto in contactos%}    
             <tr>
                 <td>{{contacto.nombre}}</td>
                 <td>{{contacto.correo}}</td>
                 <td>
                     <div class="conte_tbdatos">
                         <div>
-                            <p>{{contacto.descripcion}}</p>
+                            <p>{{contacto.mensaje}}</p>
                         </div>
                     </div>
                 </td>
                 
-                {%endfor%}
+            {%endfor%}
             </tr>
         </table>
 

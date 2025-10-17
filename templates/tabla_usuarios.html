@@ -1,0 +1,20 @@
+{% extends "base_public.html" %}
+{%block title%}Tabla contacto{%endblock%}
+{% block content%}
+
+<div class="table_info">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>usuario</th>
+            </tr>
+            {% for usuario in usuarios%}    
+            <tr>
+                <td>{{usuario.id}}</td>
+                <td>{{usuario.usuario}}</td>
+                
+            {%endfor%}
+            </tr>
+        </table>
+
+{%endblock%}

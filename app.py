@@ -19,6 +19,8 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 def inicio():
     return render_template('index.html', index=True)
 
+# Login, register, logout, login requerido y admin requerido
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     mensaje = ''
@@ -98,33 +100,48 @@ def admin_requerido(f):
         return f(*args, **kwargs)
     return decorador
 
-@app.route('/nosotros')
-def nosotros():
-    return render_template('nosotros.html')
+# hasta aquí login
+
+# panel admin
+
+@app.route('/admin')
+@admin_requerido
+def admin():
+    return render_template('admin.html', admin=True, pagina_actual='admin')
 
 @app.route('/contacto')
 def contacto():
     return render_template('contacto.html')
 
-@app.route('/contactar', methods=['POST', 'GET'])
+@app.route('/contactar', methods=['POST', 'GET']) # inserta contactos en tabla
 def contactar():
     nombre = request.form.get('nombre')
     correo = request.form.get('correo')
-    descripcion = request.form.get('descripcion')
+    mensaje = request.form.get('mensaje')
     
-    query = ('INSERT INTO contacto (nombre, correo, descripcion) VALUES(%s,%s,%s)')
-    parametros = (nombre,correo,descripcion)
-    contacto = insertar(query,parametros)
+    query = ('INSERT INTO contacto (nombre, correo, mensaje) VALUES(%s,%s,%s)')
+    parametros = (nombre,correo,mensaje)
+    insertar(query,parametros)
     
     return redirect(url_for('tabla_contacto'))
 
-@app.route('/tabla_contacto')
+@app.route('/tabla_contacto') # muestra los datos pal admin
 @admin_requerido
 def tabla_contacto():
     query = 'SELECT * FROM contacto'
     contacto = consulta(query)
     return render_template('tabla_contacto.html', contactos=contacto)
+
+@app.route('/tabla_usuarios', methods=['POST', 'GET'])
+def tabla_usuarios():
+    query = 'SELECT * FROM usuarios'
+    usuarios = consulta(query)
+    return render_template('tabla_usuarios.html', usuarios=usuarios)
     
+@app.route('/nosotros')
+def nosotros():
+    return render_template('nosotros.html')
+
 
 
 @app.route('/organizador')
