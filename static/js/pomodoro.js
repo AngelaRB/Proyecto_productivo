@@ -38,7 +38,7 @@
             populateVariable();
             startPomodoro();
 
-            // 🔥 Animar aparición del botón Cancel
+            // Animar aparición del botón Cancel
             cancelButton.style.display = "inline-block";
             cancelButton.classList.remove("hide-btn");
             cancelButton.classList.add("show-btn");
@@ -152,7 +152,7 @@
         progressText.textContent = `${Math.floor(progressPercent)}%`;
     }
 
-    // 💥 Cancelar Pomodoro con modal
+    //  Cancelar Pomodoro con modal
     cancelButton.addEventListener("click", () => {
         modal.style.display = "flex";
     });
@@ -173,7 +173,7 @@
         modal.style.display = "none";
     });
 
-    // 🎬 Función para ocultar con animación
+    //  Función para ocultar con animación
     function hideCancelButton() {
         cancelButton.classList.remove("show-btn");
         cancelButton.classList.add("hide-btn");

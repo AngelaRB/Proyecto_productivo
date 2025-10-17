@@ -140,10 +140,10 @@ def Organizador():
 def agregar_tarea():
     titulo = request.form.get('titulo')
     usuario_id = session['id']
-
+    fecha_limite = request.form['fecha_limite']
     if titulo:
-        query = "INSERT INTO tareas (tarea, hecha, usuario_id) VALUES (%s, %s,%s)"
-        parametros = (titulo,False, usuario_id)
+        query = "INSERT INTO tareas (tarea, hecha, usuario_id, fecha_limite) VALUES (%s, %s,%s, %s)"
+        parametros = (titulo,False, usuario_id, fecha_limite)
         insertar(query, parametros)
 
     return redirect(url_for('Organizador'))
