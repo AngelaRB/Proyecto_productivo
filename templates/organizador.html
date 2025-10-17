@@ -10,25 +10,43 @@
       <div class="d form-tarea">
         <form action="{{ url_for('agregar_tarea') }}" method="POST">
           <input type="text" id="input-box" name="titulo" placeholder="Escribe una tarea..." required>
+          <!--  Campo de fecha añadido -->
+           <input type="date" id="fecha_limite" name="fecha_limite" required>
           <button type="submit">Agregar</button>
         </form>
       </div>
 
       <!-- Lista de tareas -->
       {% if tareas %}
-        <ul class="tareitas">
+        <ul class="tareitas" id="list-container">
           {% for tarea in tareas %}
             <li class="{% if tarea.hecha %}checked{% endif %}">
               <span>{{ tarea.tarea }}</span>
+                {% if tarea.fecha_limite %}
+                  <div class="fecha-limite">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
+                      <path fill="#0af3ff" d="M12 7v6l4 2l-.5.9L11 13V7zM12 22a9.99 9.99 0 1 1 0-20a9.99 9.99 0 0 1 0 20Zm0-2a8 8 0 1 0 0-16a8 8 0 0 0 0 16Z"/>
+                    </svg>
+                    {{ tarea.fecha_limite }}
+                  </div>
+                {% endif %}
               <div class="botones">
                 <!-- Marcar hecha -->
                 <form action="{{ url_for('marcar_hecha', id=tarea.id) }}" method="POST" style="display:inline;">
-                  <button type="submit" class="btn-hecha" title="Marcar como hecha"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 15 15"><path fill="#0af3ff" fill-rule="evenodd" d="M0 7.5a7.5 7.5 0 1 1 15 0a7.5 7.5 0 0 1-15 0Zm7.072 3.21l4.318-5.398l-.78-.624l-3.682 4.601L4.32 7.116l-.64.768l3.392 2.827Z" clip-rule="evenodd"/></svg></button>
+                  <button type="submit" class="btn-hecha" title="Marcar como hecha">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 15 15">
+                      <path fill="#0af3ff" fill-rule="evenodd" d="M0 7.5a7.5 7.5 0 1 1 15 0a7.5 7.5 0 0 1-15 0Zm7.072 3.21l4.318-5.398l-.78-.624l-3.682 4.601L4.32 7.116l-.64.768l3.392 2.827Z" clip-rule="evenodd"/>
+                    </svg>
+                  </button>
                 </form>
 
                 <!-- Eliminar -->
                 <form action="{{ url_for('eliminar_tarea', id=tarea.id) }}" method="POST" style="display:inline;">
-                  <button type="submit" class="btn-eliminar" title="Eliminar tarea"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20"><path fill="#750d22" d="m6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"/></svg></button>
+                  <button type="submit" class="btn-eliminar" title="Eliminar tarea">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20">
+                      <path fill="#750d22" d="m6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"/>
+                    </svg>
+                  </button>
                 </form>
               </div>
             </li>
@@ -39,6 +57,7 @@
       {% endif %}
     </div>
   </div>
+
 </body>
 
 {%endblock%}
