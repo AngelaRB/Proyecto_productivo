@@ -29,7 +29,7 @@
 }
 
 html{
-    font-family: titillium Web;
+    font-family: 'Titillium Web', 'Open Sans';
     line-height: 1.5rem; 
 }
 
@@ -1079,7 +1079,7 @@ footer.pie {
     display: flex;
     font-size:16px;
     font-weight: bolder;
-    box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
     padding: 30px 60px;
     position:sticky;
     top: 0;
@@ -1089,6 +1089,11 @@ footer.pie {
     z-index: 2;
     flex: 1;
     justify-content: space-between;
+}
+
+.navbar #logo{
+    width: 100px;
+    height: 100px;
 }
 
 .navbar a{
@@ -1120,6 +1125,7 @@ footer.pie {
 .conte_header h1{
     color: var(--baselg-clr);
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 40px;
 }
 
 /* Página nosotros */
