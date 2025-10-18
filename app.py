@@ -140,8 +140,10 @@ def tabla_usuarios():
     
 @app.route('/nosotros')
 def nosotros():
-    return render_template('nosotros.html')
-
+    query = 'SELECT nombre,descripcion,foto FROM nosotros'
+    nosotros = consulta(query)
+        
+    return render_template('nosotros.html', nosotros=nosotros)
 
 
 @app.route('/organizador')

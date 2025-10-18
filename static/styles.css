@@ -29,7 +29,7 @@
 }
 
 html{
-    font-family: consolas;
+    font-family: titillium Web;
     line-height: 1.5rem; 
 }
 
@@ -1078,6 +1078,7 @@ footer.pie {
     background-color: var(--base-clr);
     display: flex;
     font-size:16px;
+    font-weight: bolder;
     box-shadow: 0 0 15px rgba(0, 0, 0, .5);
     padding: 30px 60px;
     position:sticky;
@@ -1135,7 +1136,7 @@ footer.pie {
     margin: 0 auto;
 }
 
-.conte_ange{
+.conte_nos{
     display: flex;
     flex-direction: row-reverse;
     gap: 100px;
@@ -1143,14 +1144,7 @@ footer.pie {
     border-bottom:  var(--shadow-clr) 2px solid;
 }
 
-.conte_cristian{
-    display: flex;
-    flex-direction:row;
-    gap: 100px;
-    padding: 30px;
-}
-
-.conte_ange img{
+.conte_nos img{
     width: 20%;
     border: var(--baselg-clr) 2px solid;
     border-radius: 30px;
@@ -1158,14 +1152,7 @@ footer.pie {
 }   
 
 
-.conte_cristian img{
-    width: 20%;
-    border: var(--baselg-clr) 2px solid;
-    border-radius: 30px;
-    
-}
-
-.conte_nosotros h2{
+.conte_nos h2{
     color: var(--baselg-clr);
 }
 
@@ -1257,4 +1244,100 @@ th {
         overflow-x:auto;
         margin-bottom: 100px;
     }
+}
+
+
+/* login */
+
+.conte_login{
+    box-sizing: border-box;
+    min-height: calc(100vh - 89px);        /* ocupar toda la pantalla */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* centrar horizontal */
+    align-items: center; 
+    
+}
+
+#conte_formlog{
+    width: 50%;
+    background-color: var(--hover-clr);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--txt-secundario);
+    margin: 0 auto;
+
+    &:hover{
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+#conte_formlog label{
+    font-size: 14px;
+    font-family: consolas;
+    margin-bottom: 5px;
+    display: block;
+    color: var(--txt-principal);
+}
+
+#conte_formlog input, textarea{
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-family: consolas;
+    border: none;
+    height: 45px;
+    border-radius: 12px;
+    background-color: var(--shadow-clr);
+    color: var(--txt-principal);
+    box-sizing: border-box;
+    transition: all 0,9s ease;
+    text-align: start;
+}
+
+#conte_formlog button{
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: var(--line-clr);
+    color: var(--base-clr);
+    font-weight: bolder;
+    font-size: 16px;
+    font-family: consolas;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover{
+        background-color: var(--accent2-clr);
+        color: var(--text-clr);
+    }
+}
+
+.conte_login h1{
+    margin: 40px 40px 0 40px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.conte_login p{
+    text-align: center;
+    margin: 30px 0 20px 0;
+    color: var(--secondary-text-clr);
+}
+
+.conte_msg{
+    padding-top: 20px;
+    text-align: center;   
+}
+
+#login_flecha svg{
+    fill: var(--secondary-text-clr);
+    height: 35px;
+    margin: 15px;
+    position:fixed;
 }

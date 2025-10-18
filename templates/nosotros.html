@@ -3,24 +3,21 @@
 {% block content%}
 
 <div>
+    
     <h1 id="titulo_nosotros">¿Quiénes somos?</h1>
+    {% for nosotros in nosotros %}
     <div class="conte_nosotros">
-        <div class="conte_ange">
+        <div class="conte_nos">
             <div class="conte_nombres">
-                <h2>Ángela Romero: futura ingeniera</h2>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure explicabo distinctio, atque ipsa quisquam dignissimos mollitia error corporis ipsum nulla optio officiis. Excepturi cum optio fugiat aliquam qui perferendis officia!</p>
+                <h2>{{nosotros.nombre}} </h2>
+                <p>{{nosotros.descripcion}}</p>
             </div>
-            <div class="conte_angeimg"></div>
-                <img src="../static/img/yo2.webp" alt="">
-        </div>
-        <div class="conte_cristian">
-            <div class="conte_nombres">
-                <h2>Cristian Contreras: futuro contador</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, laudantium. At, officiis itaque. Recusandae accusamus cum ipsum nam deserunt harum nisi quidem in omnis, nesciunt vero, dolor esse perferendis dicta!</p>
+            <div class="conte_img">
+                <img src="{{ url_for('static', filename='img/' + nosotros.foto) }}" alt="{{nosotros.nombre}}">
             </div>
-                <img src="../static/img/cristian.jpeg" alt="">
-        </div>
+        </div> 
     </div>
+    {% endfor%}
 </div>
 
 {%endblock%}

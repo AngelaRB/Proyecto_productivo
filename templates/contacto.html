@@ -2,22 +2,28 @@
 {%block title%}Nosotros{%endblock%}
 {% block content%}
 
-<div>
-    <form action="{{url_for('contactar')}}" method="POST">
-        <div>
-            <label for="">Nombre</label>
-            <input type="text" name="nombre">
-        </div>
-        <div>
-            <label for="">Correo</label>
-            <input type="email" name="correo">
-        </div>
-        <div>
-            <label for="">Mensaje</label>
-            <textarea name="mensaje"></textarea>
-        </div>
-        <button type="submit">Enviar</button>
-    </form>
+<div class="conte_login">
+    
+    <div id="conte_formlog">
+        <h1>Contáctanos</h1>
+        <form action="{{url_for('contactar')}}" method="POST">
+            <div>
+                <label for="">Nombre</label>
+                <input type="text" name="nombre" placeholder="Nombre" required>
+            </div>
+            <div>
+                <label for="">Correo</label>
+                <input type="password" name="correo" placeholder="Correo" required>
+            </div>
+            <div>
+                <label for="">Mensaje</label>
+                <textarea name="mensaje"></textarea>
+            </div>
+            <div>
+                <button>Enviar</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 {%endblock%}

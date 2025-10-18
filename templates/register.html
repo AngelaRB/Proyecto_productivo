@@ -2,27 +2,33 @@
 {%block title%}Registrarse{%endblock%}
 {% block content%}
 
-<div>
-    <main>
+<div id="login_flecha">
+    <a href="{{url_for('inicio')}}">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+    </a>
+</div>
+
+<div class="conte_login">
+    <div id="conte_formlog">
         <h1>Registrarse</h1>
-    <form action="" method="POST">
-        <div>
-            <label for="">Usuario</label>
-            <input type="text" name="usuarios" required>
-        </div>
-        <div>
-            <label for="">Contraseña</label>
-            <input type="password" name="password" required>
-        </div>
-        <div>
-            <button class="btn-enviar">Registrarse</button>
-        </div>
-        <div>
-            {{mensaje}}
-        </div>
-    </form>
-    </main>
-    
+        <p>¡Bienvenido a Organisite!</p>
+        <form action="" method="POST">
+            <div>
+                <label for="">Usuario</label>
+                <input type="text" name="usuarios" placeholder="Usuario" required>
+            </div>
+            <div>
+                <label for="">Contraseña</label>
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
+            <div>
+                <button>Registrarse</button>
+            </div>
+            <div class="conte_msg">
+                {{mensaje}}
+            </div>
+        </form>
+    </div>
 </div>
 
 {%endblock%}
