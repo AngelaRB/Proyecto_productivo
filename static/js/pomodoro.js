@@ -1,116 +1,74 @@
  window.onload = () => {
-    let breaktime, worktime, restTime, timesCompleted, cyclesGoal;
+    let breaktime, worktime, restTime, cyclesGoal;
     let cyclesCompleted = 0;
     let timerId = null;
-    let currentTime = 1;
+    let currentTime = 0;
     let seconds = 0;
+    let totalSeconds = 0;
+    let isWorking = true;
 
     const clock = document.getElementById("clock");
     const cyclesInput = document.getElementById("cycles-input");
     const startButton = document.getElementById("start-button");
-    const cancelButton = document.getElementById("cancel-button");
     const workTimeInput = document.getElementById("work-time");
     const breakTimeInput = document.getElementById("break-time");
     const restTimeInput = document.getElementById("rest-time");
     const progressBar = document.getElementById("progress-bar");
     const progressText = document.getElementById("progress-text");
 
-    //  Evitar valores menores a 1 en los inputs
+    // Nuevo: estado visible en la UI (colocar este elemento en el HTML)
+    // <p id="status-text"></p>
+    const statusText = document.getElementById("status-text");
+
+    // Referencia al audio (usa la etiqueta <audio id="alarm-sound"...> en tu HTML)
+    const alarmEl = document.getElementById("alarm-sound");
+
+    // Evitar valores menores a 1
     [workTimeInput, breakTimeInput, restTimeInput, cyclesInput].forEach(input => {
         input.addEventListener("input", () => {
-            if (input.value < 1) {
-                input.value = 1;
-                console.warn(`El valor mínimo para "${input.id}" es 1`);
-            }
+            if (input.value < 1) input.value = 1;
         });
     });
 
-
-    // Modal
-    const modal = document.getElementById("confirm-modal");
-    const confirmYes = document.getElementById("confirm-yes");
-    const confirmNo = document.getElementById("confirm-no");
-
-    let totalSeconds = 0;
+    // IMPORTANTE: desbloquear audio con la primera interacción (click en Start).
+    // Algunos navegadores bloquean la reproducción hasta que el usuario interactúe.
+    startButton.addEventListener("click", () => {
+        // Si no hay instancia de audio, intenta 'despertarla' con un play() breve.
+        if (alarmEl) {
+            // play & immediately pause to satisfy la política de interacción en algunos navegadores
+            alarmEl.play().then(() => {
+                alarmEl.pause();
+                alarmEl.currentTime = 0;
+            }).catch(() => {
+                // si falla, no pasa nada: el audio se intentará reproducir cuando corresponda
+            });
+        }
+    }, { once: true }); // solo la primera vez
 
     startButton.onclick = () => {
         if (!timerId) {
-            populateVariable();
+            populateVariables();
             startPomodoro();
-
-            // Animar aparición del botón Cancel
-            cancelButton.style.display = "inline-block";
-            cancelButton.classList.remove("hide-btn");
-            cancelButton.classList.add("show-btn");
         }
     };
 
-    function startPomodoro() {
-        pomodoroController();
-    }
-
-    function populateVariable() {
+    function populateVariables() {
         worktime = parseInt(workTimeInput.value);
         breaktime = parseInt(breakTimeInput.value);
         restTime = parseInt(restTimeInput.value);
         cyclesGoal = parseInt(cyclesInput.value);
-        timesCompleted = 0;
         cyclesCompleted = 0;
+        isWorking = true;
         currentTime = worktime;
         seconds = 0;
         totalSeconds = worktime * 60;
         updateClock();
         updateProgressBar();
+        statusText && (statusText.textContent = "En trabajo");
     }
 
-    function pomodoroController() {
-        if (isRestTime()) {
-            cyclesCompleted++;
-            if (!goalReached()) {
-                currentTime = restTime;
-                seconds = 0;
-                totalSeconds = restTime * 60;
-                startTimer();
-                timesCompleted = 0;
-            } else {
-                reproducirAlarma();
-                timerId = null;
-                hideCancelButton();
-            }
-            return;
-        }
-
-        if (timesCompleted % 2 == 0) {
-            currentTime = worktime;
-            seconds = 0;
-            totalSeconds = worktime * 60;
-            timesCompleted++;
-            startTimer();
-        } else {
-            currentTime = breaktime;
-            seconds = 0;
-            totalSeconds = breaktime * 60;
-            timesCompleted++;
-            startTimer();
-        }
-    }
-
-    function isRestTime() {
-        return timesCompleted === 8;
-    }
-
-    function goalReached() {
-        return cyclesGoal === cyclesCompleted;
-    }
-
-    function updateClock() {
-        let clockminutes = formatnumbers(currentTime);
-        let clockseconds = formatnumbers(seconds);
-        clock.innerHTML = clockminutes + ":" + clockseconds;
-    }
-
-    function formatnumbers(time) {
-        return time < 10 ? "0" + time : time;
+    function startPomodoro() {
+        startTimer();
     }
 
     function startTimer() {
@@ -132,55 +90,109 @@
             updateProgressBar();
             timerId = setTimeout(timer, 1000);
         } else {
+            // terminó un segmento (trabajo o descanso)
             reproducirAlarma();
-            pomodoroController();
+
+            if (isWorking) {
+                // terminó trabajo
+                cyclesCompleted++;
+                statusText && (statusText.textContent = `¡Pomodoro ${cyclesCompleted} completado!`);
+                if (cyclesCompleted % 4 === 0) {
+                    // descanso largo
+                    iniciarDescanso(restTime);
+                    statusText && (statusText.textContent = "Descanso largo");
+                } else {
+                    // descanso corto
+                    iniciarDescanso(breaktime);
+                    statusText && (statusText.textContent = "Descanso corto");
+                }
+
+            } else {
+                // terminó descanso
+                if (cyclesCompleted >= cyclesGoal) {
+                    // **YA NO se usa alert**: mostramos en la UI y detenemos el pomodoro.
+                    finalizarPomodoroUI();
+                    return;
+                }
+                iniciarTrabajo();
+                statusText && (statusText.textContent = "De nuevo al trabajo");
+            }
         }
     }
 
-    function reproducirAlarma() {
-        const alarm = document.getElementById("alarm-sound");
-        if (alarm) {
-            alarm.currentTime = 0;
-            alarm.play().catch(error => console.error("Error al reproducir:", error));
-        }
+    function iniciarTrabajo() {
+        isWorking = true;
+        currentTime = worktime;
+        seconds = 0;
+        totalSeconds = worktime * 60;
+        // breve retraso para que el usuario vea el cambio (opcional)
+        setTimeout(() => startTimer(), 250);
     }
 
-    function updateProgressBar() {
-        const elapsedSeconds = totalSeconds - (currentTime * 60 + seconds);
-        const progressPercent = (elapsedSeconds / totalSeconds) * 100;
-        progressBar.style.width = `${progressPercent}%`;
-        progressText.textContent = `${Math.floor(progressPercent)}%`;
+    function iniciarDescanso(tiempo) {
+        isWorking = false;
+        currentTime = tiempo;
+        seconds = 0;
+        totalSeconds = tiempo * 60;
+        setTimeout(() => startTimer(), 250);
     }
 
-    //  Cancelar Pomodoro con modal
-    cancelButton.addEventListener("click", () => {
-        modal.style.display = "flex";
-    });
-
-    confirmYes.addEventListener("click", () => {
+    function finalizarPomodoroUI() {
         clearTimeout(timerId);
         timerId = null;
+        // Mensaje visible dentro de la UI (no alert)
+        if (statusText) {
+            statusText.textContent = "🎉 Pomodoro completado";
+        } else {
+            console.log("Pomodoro completado");
+        }
+        // Reiniciar barra y reloj a 0:00 o al tiempo de trabajo según prefieras
         currentTime = 0;
         seconds = 0;
         updateClock();
         progressBar.style.width = "0%";
-        progressText.textContent = "0%";
-        modal.style.display = "none";
-        hideCancelButton();
-    });
+        progressText.textContent = "100%";
+        // Intenta reproducir alarma final (otra vez por seguridad)
+        reproducirAlarma();
+        // vibración si soporta
+        if (navigator.vibrate) navigator.vibrate(500);
+    }
 
-    confirmNo.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
+    function updateClock() {
+        let min = formatnumbers(currentTime);
+        let sec = formatnumbers(seconds);
+        clock.textContent = `${min}:${sec}`;
+    }
 
-    //  Función para ocultar con animación
-    function hideCancelButton() {
-        cancelButton.classList.remove("show-btn");
-        cancelButton.classList.add("hide-btn");
-        setTimeout(() => {
-            cancelButton.style.display = "none";
-        }, 300);
+    function formatnumbers(time) {
+        return time < 10 ? "0" + time : time;
+    }
+
+    function updateProgressBar() {
+        // evita división por cero
+        if (!totalSeconds || totalSeconds === 0) {
+            progressBar.style.width = "0%";
+            progressText.textContent = "0%";
+            return;
+        }
+        const elapsedSeconds = totalSeconds - (currentTime * 60 + seconds);
+        const progressPercent = Math.max(0, Math.min(100, (elapsedSeconds / totalSeconds) * 100));
+        progressBar.style.width = `${progressPercent}%`;
+        progressText.textContent = `${Math.floor(progressPercent)}%`;
+    }
+
+    function reproducirAlarma() {
+        if (!alarmEl) return;
+        // Reproducir y capturar rechazo (policy/autoplay)
+        alarmEl.currentTime = 0;
+        const playPromise = alarmEl.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(err => {
+                // Si falla (autoplay), intentaremos reproducir en el siguiente click del usuario
+                console.warn("No se pudo reproducir la alarma automáticamente:", err);
+            });
+        }
+        // intentar vibrar (si aplica)
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
     }
 };
-
-

@@ -1,14 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Temporizador Pomodoro</title>
-  <link rel="stylesheet" href="pomodoro.css" />
-</head>
 
 <body>
   <h1 class="titulod">Temporizador</h1>
@@ -21,12 +13,11 @@
 
       <div class="input-container">
         <label for="cycles-input">Pomodoro cycles</label>
-        <input id="cycles-input" type="number" value="1" min="1">
+        <input id="cycles-input" type="number" value="4" min="1">
       </div>
 
       <div class="row-container start-container">
         <button id="start-button">Start</button>
-        <button id="cancel-button" style="display:none;">Cancel</button>
       </div>
 
       <div class="row-container settings-container">
@@ -46,6 +37,8 @@
     </div>
   </main>
 
+
+
   <div class="progress-container">
     <div id="progress-bar">
       <span id="progress-text">0%</span>
@@ -56,22 +49,10 @@
     <p class="centrar">Todos los derechos reservados - FocuSpace &copy;2025</p>
   </footer>
 
-  <audio id="alarm-sound" src="sonidos/Homecoming - Samsung Ringtone.mp3" preload="auto"></audio>
-
-  <!-- Modal -->
-  <div id="confirm-modal" class="modal">
-    <div class="modal-content">
-      <p>¿Estás seguro de que quieres terminar tu sesión?</p>
-      <div class="modal-buttons">
-        <button id="confirm-yes">Sí</button>
-        <button id="confirm-no">No</button>
-      </div>
-    </div>
-  </div>
-
-
+  <audio id="alarm-sound" src="static/sonidos/alarma.mp3" preload="auto"></audio>
 </body>
-</html>
+
+
 
 
 {%endblock%}
