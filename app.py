@@ -17,7 +17,14 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
 @app.route('/')
 def inicio():
-    return render_template('index.html', index=True)
+    query = """
+        SELECT r.texto, u.usuario 
+        FROM reseñas r
+        JOIN usuarios u ON r.usuario_id = u.id LIMIT 3
+    """
+    opinion = consulta(query)
+    
+    return render_template('index.html', index=True, reseñas=opinion)
 
 # Login, register, logout, login requerido y admin requerido
 
@@ -254,17 +261,23 @@ def opiniones():
 def reseñas():
     if request.method == 'POST':
         reseña = request.form.get('opinion')
+        usuario_id = session.get('id')
         fecha = datetime.now()
         estrellas_str = request.form.get("estrellas")
         estrellas = float(estrellas_str) if estrellas_str else 0.0
-        query = "INSERT INTO reseñas (texto, fecha, estrellas) VALUES (%s, %s, %s)"
-        parametros = (reseña, fecha, estrellas)
+        query = "INSERT INTO reseñas (texto, fecha, estrellas, usuario_id) VALUES (%s, %s, %s, %s)"
+        parametros = (reseña, fecha, estrellas, usuario_id)
         insertar(query, parametros)
 
         # Redirige para mostrar la reseña recién agregada
         return redirect(url_for('reseñas'))
 
     # 👇 Aquí debe llamarse a la función, no a la función en sí
+    
+    #query = ("SELECT * FROM reseñas ORDER BY fecha DESC WHERE usuario_id = %s ")
+    #parametros = (usuario_id,)
+    #return render_template('opiniones.html', reseña=reseñas, pagina_actual='opiniones')
+
     reseñas = consulta("SELECT * FROM reseñas ORDER BY fecha DESC")
 
     # 👇 Pasa la variable al template

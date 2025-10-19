@@ -2,12 +2,12 @@
 {%block title%}Organisite{%endblock%}
 {% block content%}
 
+{% for opinion in reseñas%}
  <div>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti, aliquam possimus fugit quos, magnam atque dolore velit, quidem commodi praesentium laboriosam pariatur rerum ducimus in corporis? Perferendis dolorum fugiat commodi?</p>
-    <br>
-    <br>
-    <br>
+    <h2>{{opinion.usuario}} </h2>
+     <p>{{opinion.texto}}</p> 
  </div>
+ {%endfor%}
 
         
     

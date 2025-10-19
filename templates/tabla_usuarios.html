@@ -7,12 +7,13 @@
             <tr>
                 <th>id</th>
                 <th>usuario</th>
+                <th>rol</th>
             </tr>
             {% for usuario in usuarios%}    
             <tr>
                 <td>{{usuario.id}}</td>
                 <td>{{usuario.usuario}}</td>
-                
+                <td>{{usuario.rol}}</td>
             {%endfor%}
             </tr>
         </table>

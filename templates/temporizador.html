@@ -3,34 +3,37 @@
 
 
 <body>
-  <h1 class="titulod">Temporizador</h1>
+  
 
   <main class="temp">
+    
     <div class="temporizador-container">
-      <div class="row-container clock-container">
-        <h2 id="clock">25:00</h2>
-      </div>
+      <h1 class="titulod">Temporizador</h1>
 
       <div class="input-container">
-        <label for="cycles-input">Pomodoro cycles</label>
+        <label for="cycles-input">Ciclos de pomodoro</label>
         <input id="cycles-input" type="number" value="4" min="1">
       </div>
 
+      <div class="row-container clock-container" id="pomodoro_min">
+        <h2 id="clock">25:00</h2>
+      </div>
+
       <div class="row-container start-container">
-        <button id="start-button">Start</button>
+        <button id="start-button" class="btn-pro">Comenzar</button>
       </div>
 
       <div class="row-container settings-container">
         <div class="input-container">
-          <label for="work-time">Work time</label>
+          <label for="work-time">Concentración</label>
           <input id="work-time" type="number" value="25" min="1">
         </div>
         <div class="input-container">
-          <label for="break-time">Break time</label>
+          <label for="break-time">Descanso</label>
           <input id="break-time" type="number" value="5" min="1">
         </div>
         <div class="input-container">
-          <label for="rest-time">Rest time</label>
+          <label for="rest-time">Descanso largo</label>
           <input id="rest-time" type="number" value="15" min="1">
         </div>
       </div>
