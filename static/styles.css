@@ -17,9 +17,11 @@
     --btn-clr: #04B92B;
     --accent-clr: #4d0382;
     --text-clr: #e6e6ef;
-    --secondary-text-clr: #b0b3c1;
+    --secondary-text-clr: #949baf;
     --shadow-clr: #5e63ff33;
+    --shadow2-clr: #363df833;
     --dark-clr: #2b2c3c;
+    --dark2-clr: #264484;
 }
 
 *{
@@ -178,25 +180,22 @@ body{
     margin-top: auto;
 }
 
-.fondo_diario{
-    padding: min(30px, 7%);
-}
 
-.fondo_diario p{
-    color: var(--secondary-text-clr);
-    margin-top: 5px;
-    margin-bottom: 15px;
-}
+
 
 
 .container{
     border: 1px solid var(--line-clr);
     border-radius: 1em;
-    margin-bottom: 20px;
+    margin: min(3em,15%);
     padding: min(3em, 15%);
+    background-color: var(--hover-clr);
+
 
   h2, p { margin-top: 1em }
 }
+
+
 
 
 @media(max-width: 800px){
@@ -210,7 +209,7 @@ body{
 
     .container{
         border:  none;
-        padding: 0;
+
     }
 
     #sidebar{
@@ -350,7 +349,7 @@ h2{
     padding: 20px;
     width: 90%;
     max-width: 500px;
-    border-radius: 50px;
+    border-radius: 40px;
     background: var(--hover-clr);
     box-shadow: rgba(0, 0, 0, .2) 0px 0px 10px;
 }
@@ -565,7 +564,7 @@ footer.pie {
 
   .todo-app {
     background: var(--hover-clr);
-    border-radius: 20px;
+    border-radius: 40px;
     box-shadow: 0 0 5px rgba(0, 0, 0, .4);
     width: 85%;
     padding: 30px 25px;
@@ -625,57 +624,12 @@ footer.pie {
     }
   }
 
-  /* --- Lista de tareas --- */
-  .ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-    text-align: left;
-  }
-
-  .ul li {
-    background: var(--shadow-clr);
-    color: var(--text-clr);
-    padding: 10px 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: 0.3s ease;
-  }
-
-  .ul li:hover {
-    background: var(--shadow-clr);
-  }
-
-  .ul li.checked {
-    text-decoration: line-through;
-    color: var(--shadow-clr);
-  }
-
-  .ul li span {
-    cursor: pointer;
-    font-weight: bold;
-    color: #ff5e5e;
-    font-size: 18px;
-    transition: 0.3s ease;
-  }
-
-  .ul li span:hover {
-    color: #ff2e2e;
-  }
-
   /* --- Mensaje cuando no hay tareas --- */
   .message {
     margin-top: 15px;
     color: var(--secondary-text-clr);
     font-size: 14px;
   }
-
-
-
-
 
   .tareitas {
   list-style: none;
@@ -698,21 +652,22 @@ footer.pie {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
   transition: all 0.2s ease-in-out;
   border: none;
+  
 }
 
 .tareitas li:hover {
   transform: scale(1.02);
-  background: var(--dark-clr);
+  background: var(--shadow2-clr);
 }
 
 .tareitas li.checked {
   text-decoration: line-through;
   color: #aaa;
-  background: var(--shadow-clr);
+  background: var(--dark-clr);
 }
 
 .tareitas li.checked span::before {
-  content: "✔ ";
+  content: "✔";
   color: var(--accent2-clr);
 }
 
@@ -768,12 +723,6 @@ footer.pie {
     font-size: 40px;
 }
 
-.container svg{
-    width: 100%;
-    display: flex;
-    
-}
-
 .container a{
     align-content: center;
     width: 50px;
@@ -791,13 +740,30 @@ footer.pie {
 .leer_diario{
     border: 1px solid var(--line-clr);
     border-radius: 1em;
-    margin-bottom: 20px;
+    margin: min(3em, 15%);
     padding: min(3em, 15%);
+    background-color: var(--shadow-clr);
 }
 
-.leer_diario p{
-    color: var(--text-clr);
+    .leer_diario p{
+        color: var(--text-clr);
+        width: 100%;
+    }
+
+.leer_diario svg{
+    width: 50%;
+    display: flex;
 }
+
+.nuevo_diario{
+    display: flex;
+  
+}
+
+.nuevo_diario2{
+
+}
+
 
 .escribir_diario{
     position:relative;
@@ -869,9 +835,12 @@ footer.pie {
     border: none;
     box-shadow: 0 0 15px rgba(0, 0, 0, .2);
     padding: 10px;
+    width: 100%;
+    text-align: center;
 }
 
 .diario_des textarea{
+    color: var(--base-clr);
     width: 500px;
     height: 400px;
     background: none;
@@ -1073,7 +1042,7 @@ footer.pie {
 
 
 
-/* página inicio y navbar */
+/*  navbar */
 
 .navbar{
     background-color: var(--base-clr);
@@ -1110,23 +1079,48 @@ footer.pie {
 .fondo_header{
     position:relative;
     height: 600px;
+    display: flex;
     
 }
 
 .conte_header{
     display: flex; 
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-evenly;
     position:absolute;
     width: 100%;
     height: 100%;
+    gap: 40px;
 }
 
 .conte_header h1{
     color: var(--baselg-clr);
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 40px;
+}
+
+.conte_header h2{
+    color: var(--secondary-text-clr);
+    font-size: 30px;
+}
+
+.conte_header a{
+    text-decoration: none;
+    color: var(--base-clr);
+    font-size: 20px;
+    font-weight: bolder;
+    background-color: var(--line-clr);
+    padding: 10px 20px 10px 20px;
+    border-radius: 30px;
+    transition-duration: 0.6s;
+
+    &:hover{
+        transform: scale(1.05);
+        transition-duration: 0.6s;
+        background-color: var(--accent2-clr);
+        color: var(--text-clr);
+    }
 }
 
 /* Página nosotros */
@@ -1189,6 +1183,8 @@ footer.pie {
 
 .conte_nombres p{
     text-align: justify;
+    font-size: 20px;
+    line-height: 1.5;
 }
 
 /* admin */
@@ -1370,4 +1366,91 @@ th {
         fill: var(--text-clr);
         transition-duration: 0.4s;
     }
+}
+
+
+/* página inicio */
+.section_op{
+    background-image: url(../static/icons/fondo_estrellas.svg);
+    display: flex;
+    flex-direction: column;
+    padding-bottom:5%;
+}
+
+.section_op h1{
+    padding: 5% 5% 2% 5%;
+    text-align: center;
+}
+
+
+.conte_op{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    width:80%;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+.conte_op h2{
+    color: var(--secondary-text-clr);
+}
+
+.conte_op div{
+    padding: 10%;
+    text-align: justify;
+}
+
+.conte_op div{
+    background: var(--dark-clr);
+    border-radius: 20px;
+    border: none;
+    margin: 0 auto;
+}
+
+.section_tareas{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 5%;
+    background: var(--dark2-clr);
+    padding: 3%;
+    border-radius: 25px;
+    gap: 50px;
+    align-items: center;
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: justify;
+    box-shadow: rgba(0, 0, 0, .5) 1px 1px 15px;
+}
+
+.inicio_img{
+    display: flex;
+    justify-content: right;
+}
+
+.section_tareas img{
+    border-radius: 40px;
+    display: flex;
+    justify-content: right;
+    margin-left: auto;
+    box-shadow: rgba(0, 0, 0, .5) 1px 1px 15px;
+    transition-duration: 0.3s;
+    width: 500px;
+
+    &:hover{
+        rotate: calc(2deg);
+        transition-duration: 0.3s;
+    }
+}
+
+.section_tareas h2{
+    color: var(--text-clr);
+    font-size: 40px;
+    text-align: left;
+    text-shadow: 2px 2px 10px black;
+}
+
+.inicio_tarea{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }

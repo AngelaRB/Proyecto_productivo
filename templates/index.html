@@ -2,12 +2,49 @@
 {%block title%}Organisite{%endblock%}
 {% block content%}
 
-{% for opinion in reseñas%}
- <div>
-    <h2>{{opinion.usuario}} </h2>
-     <p>{{opinion.texto}}</p> 
- </div>
- {%endfor%}
+
+
+<section class="section_tareas">
+    <div class="inicio_tarea">
+        <h2>Organiza tus tareas</h2>
+        <p>Puedes llevar el control de las tareas que tienes pendientes, ya sean tareas, proyectos o actividades personales: todo en un solo lugar.</p>
+    </div>
+    <div>
+        <img src="../static/img/tareas.png" alt="">
+    </div>
+</section>
+
+<section class="section_tareas">
+    <div class="inicio_tarea">
+        <h2>Maneja tu tiempo</h2>
+        <p>Termina tus tareas más rápido con el temporizador. Puedes usar la técnica "Pomodoro": realizar 25 minutos de concentración y 5 de descanso. Pero lo mejor: también lo puedes personalizar.</p>
+    </div>
+    <div class="inicio_img">
+        <img src="../static/img/temporizador.png" alt="">
+    </div>
+</section>
+
+<section class="section_tareas">
+    <div class="inicio_tarea">
+        <h2>Tranquiliza tu pensamientos</h2>
+        <p>Escribe en el diario lo que sientes, tus pensamientos, o simplemente tu día, para poder organizar tu mente. Tus notas quedan guardadas para que solo tú tengas acceso a ellas. </p>
+    </div>
+    <div class="inicio_img">
+        <img src="../static/img/diario.png" alt="">
+    </div>
+</section>
+
+<section class="section_op">
+    <h1>Reseñas de usuarios</h1>
+    <div class="conte_op">
+        {% for opinion in reseñas%}
+            <div>
+                <h2>{{opinion.usuario}} </h2>
+                <p>{{opinion.texto}}</p> 
+            </div>
+        {%endfor%}
+    </div>
+</section>
 
         
     

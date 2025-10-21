@@ -74,7 +74,7 @@ def login():
             session['rol'] = user['rol']
             print("ROL DEL USUARIO:", user.get('rol'))
 
-            return redirect(url_for('diario'))
+            return redirect(url_for('Organizador'))
         else:
             mensaje = 'Usuario o contraseña incorrectos'
             return render_template('login.html', mensaje=mensaje,login=login)
@@ -102,7 +102,7 @@ def admin_requerido(f):
             return redirect(url_for('login'))
         
         if session.get('rol') != 'admin':
-            return redirect(url_for('diario'))
+            return redirect(url_for('Organizador'))
         
         return f(*args, **kwargs)
     return decorador
@@ -283,10 +283,6 @@ def reseñas():
     # 👇 Pasa la variable al template
     return render_template('opiniones.html', reseñas=reseñas, pagina_actual='opiniones')
 
-@app.route('/relax', methods=['GET', 'POST'])
-@login_requerido
-def relax():
-    return render_template('relax.html', pagina_actual='relax')
 
 
     
