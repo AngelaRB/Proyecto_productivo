@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{%block title%}Organisite - Reseñas{%endblock%}
 {% block content %}
 
 
@@ -86,19 +87,18 @@
 
 
 <body>
-    <h1 class="titulod">Danos tu opinión aquí</h1>
-    <div class="reseñas-container">
+    
+    <div  id="conte_res">
+      <h1 class="titulod">Danos tu opinión aquí</h1>
         <div class="todo-appd">
             <h2 class="colorr">¿Qué te ha parecido Organisite?</h2>
             <div class="add-taskd">
                 <form action="/reseñas" method="POST" class="form-taread">
-                  <input 
-                    type="text" 
+                  <textarea type="text" 
                     class="input-boxd" 
                     placeholder="Escribe tu reseña..." 
                     name="opinion" 
-                    required
-                  >
+                    required></textarea>
 
                   <!-- Estrellas -->
                   <div class="rating">
@@ -120,25 +120,28 @@
         </div>
     </div>
 
-    <h1 class="apartadp">APARTADO DE RESEÑAS</h1>
-    <div class="reseñas-container">
-      <ul id="list-container" class="ulr">
+    <h1 class="apartadp">RESEÑAS</h1>
+    <div>
+      <ul id="listres-container" class="ulr">
         {% for r in reseñas %}
-        <li>
-          <strong class="escritor">{{ r.fecha.strftime("%Y-%m-%d %H:%M:%S") }}</strong>: {{ r.texto }}
-        </li>
-
-        
-
-         <div class="rating">
-          {% for i in range(1, 6) %}
-            {% if r.estrellas and i <= r.estrellas|float %}
-              <i class="bi bi-star-fill checked"></i>
+        <div class="conte_opiniones">
+          <div>
+              <li>
+                <strong class="escritor">{{ r.fecha.strftime("%Y-%m-%d %H:%M:%S") }}</strong>: {{ r.texto }}
+              </li>
+          </div>
+          
+          <div class="rating">
+            {% for i in range(1, 6) %}
+              {% if r.estrellas and i <= r.estrellas|float %}
+                <i class="bi bi-star-fill checked"></i>
             {% else %}
-              <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
             {% endif %}
-          {% endfor %}
+            {% endfor %}
+          </div>
         </div>
+        
 
 
         {% else %}

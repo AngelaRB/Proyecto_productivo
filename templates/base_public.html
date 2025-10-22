@@ -21,5 +21,10 @@
 
         {%endblock%}
     </main>
+    {% if not login and not register %}
+        {%include 'components/footer.html'%}
+    {% else %}
+    
+    {%endif%}
 </body>
 </html>
